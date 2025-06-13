@@ -26,7 +26,7 @@ public class TestServiceImpl implements TestService {
 
     @Override
     public Test createTest(Test request) {
-        return testRepository.save(request);
+        return testRepository.saveAndFlush(request);
     }
 
     @Override
@@ -40,13 +40,5 @@ public class TestServiceImpl implements TestService {
         testDTO.setEssayAnswerList(essayAnswerList);
         testDTO.setMultipleChoiceAnswerList(multipleChoiceAnswerList);
         return testDTO;
-    }
-
-    @Override
-    public Test updateTest(Test request) {
-        Optional<Test> testOptional = testRepository.findById(request.getId());
-        testOptional.get().setContent(request.getContent());
-        testOptional.get().setContent(request.getContent());
-        return null;
     }
 }

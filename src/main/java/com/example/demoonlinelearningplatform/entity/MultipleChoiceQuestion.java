@@ -19,9 +19,11 @@ public class MultipleChoiceQuestion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private long questionNumber;
-
     private String content;
+    private String answer1;
+    private String answer2;
+    private String answer3;
+    private String answer4;
     private Long idTopicTest;
 }

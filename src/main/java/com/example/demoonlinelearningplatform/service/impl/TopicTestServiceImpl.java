@@ -12,7 +12,9 @@ import com.example.demoonlinelearningplatform.service.TopicTestService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,17 +32,32 @@ public class TopicTestServiceImpl implements TopicTestService {
     }
 
     @Override
-    public TopicTestDTO getDetailTopicTest(Long idTopicTest) {
-        Optional<TopicTest> topicTestOptional = topicTestRepository.findById(idTopicTest);
-        if (topicTestOptional.isEmpty()) throw new InvalidException("không tìm thấy đề");
+    public List<TopicTestDTO> getDetailTopicTestByCourse(Long idCourse) {
+        List<TopicTest> topicTestList = topicTestRepository.getAllByIdCourse(idCourse);
+        if (CollectionUtils.isEmpty(topicTestList)) return List.of();
+        List<TopicTestDTO> topicTestDTOS = new ArrayList<>();
+        for (int i = 0; i < topicTestList.size(); i++) {
+            TopicTestDTO topicTestDTO = getData(topicTestList.get(i));
+            topicTestDTOS.add(topicTestDTO);
+        }
+        return topicTestDTOS;
+    }
 
+    @Override
+    public TopicTestDTO getDetailTopicTestByLesson(Long idLesson) {
+        Optional<TopicTest> topicTestOptional = topicTestRepository.getFirstByIdLesson(idLesson);
+        if (topicTestOptional.isEmpty()) throw new InvalidException("không tìm thấy đề");
+        return getData(topicTestOptional.get());
+    }
+
+    private TopicTestDTO getData(TopicTest topicTestOptional) {
         List<EssayQuestion> essayQuestionList = essayQuestionRepository
-                .getAllByIdTopicTest(topicTestOptional.get().getId());
+                .getAllByIdTopicTest(topicTestOptional.getId());
 
         List<MultipleChoiceQuestion> multipleChoiceQuestionList = multipleChoiceQuestionRepository
-                .getAllByIdTopicTest(topicTestOptional.get().getId());
+                .getAllByIdTopicTest(topicTestOptional.getId());
         TopicTestDTO topicTestDTO = new TopicTestDTO();
-        BeanUtils.copyProperties(topicTestOptional.get(), topicTestDTO);
+        BeanUtils.copyProperties(topicTestOptional, topicTestDTO);
         topicTestDTO.setEssayQuestionList(essayQuestionList);
         topicTestDTO.setMultipleChoiceQuestionList(multipleChoiceQuestionList);
         return topicTestDTO;

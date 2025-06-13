@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin("*")
 @RequestMapping("/api/tests")
@@ -22,30 +24,24 @@ public class TestController {
     private final EssayAnswerRepository essayAnswerRepository;
 
     @PostMapping("/createTest")
-    public ResponseEntity<Object> createReview(@RequestBody Test test) {
-        testService.createTest(test);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+    public ResponseEntity<Object> createTest(@RequestBody Test test) {
+        return new ResponseEntity<>(testService.createTest(test), HttpStatus.CREATED);
     }
 
     @GetMapping("/getDetailTest")
-    public ResponseEntity<Object> getDetailUser(@RequestParam Long idTest) {
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @PutMapping("/updateTest")
-    public ResponseEntity<Object> updateInformation(@RequestBody Test test) {
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<Object> getDetailTest(@RequestParam Long idTest) {
+        return new ResponseEntity<>(testService.getDetailTest(idTest), HttpStatus.OK);
     }
 
     @PostMapping("/createMultipleChoiceAnswer")
-    public ResponseEntity<Object> createMultipleChoiceAnswer(@RequestBody MultipleChoiceAnswer answer) {
-        multipleChoiceAnswerRepository.save(answer);
+    public ResponseEntity<Object> createMultipleChoiceAnswer(@RequestBody List<MultipleChoiceAnswer> answers) {
+        multipleChoiceAnswerRepository.saveAll(answers);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PostMapping("/createEssayAnswer")
-    public ResponseEntity<Object> createEssayAnswer(@RequestBody EssayAnswer answer) {
-        essayAnswerRepository.save(answer);
+    public ResponseEntity<Object> createEssayAnswer(@RequestBody List<EssayAnswer> answers) {
+        essayAnswerRepository.saveAll(answers);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 }

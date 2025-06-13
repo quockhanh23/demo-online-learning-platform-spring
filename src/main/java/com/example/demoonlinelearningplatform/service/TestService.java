@@ -8,6 +8,4 @@ public interface TestService {
     Test createTest(Test request);
 
     TestDTO getDetailTest(Long idTest);
-
-    Test updateTest(Test request);
 }

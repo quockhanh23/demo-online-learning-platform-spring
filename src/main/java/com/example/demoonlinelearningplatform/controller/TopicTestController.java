@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin("*")
 @RequestMapping("/api/topicTests")
@@ -22,31 +24,34 @@ public class TopicTestController {
     private final EssayQuestionRepository essayQuestionRepository;
 
     @PostMapping("/createTopicTest")
-    public ResponseEntity<Object> createReview(@RequestBody TopicTest topicTest) {
-        topicTestService.createTopicTest(topicTest);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+    public ResponseEntity<Object> createTopicTest(@RequestBody TopicTest topicTest) {
+        return new ResponseEntity<>(topicTestService.createTopicTest(topicTest), HttpStatus.CREATED);
     }
 
-    @GetMapping("/getDetailTopicTest")
-    public ResponseEntity<Object> getDetailUser(@RequestParam Long idTopicTest) {
-        topicTestService.getDetailTopicTest(idTopicTest);
-        return new ResponseEntity<>(HttpStatus.OK);
+    @GetMapping("/getDetailTopicTestByCourse")
+    public ResponseEntity<Object> getDetailTopicTestByCourse(@RequestParam Long idCourse) {
+        return new ResponseEntity<>(topicTestService.getDetailTopicTestByCourse(idCourse), HttpStatus.OK);
+    }
+
+    @GetMapping("/getDetailTopicTestByLesson")
+    public ResponseEntity<Object> getDetailTopicTestByLesson(@RequestParam Long idLesson) {
+        return new ResponseEntity<>(topicTestService.getDetailTopicTestByLesson(idLesson), HttpStatus.OK);
     }
 
     @PutMapping("/updateTopicTest")
-    public ResponseEntity<Object> updateInformation(@RequestBody TopicTest topicTest) {
+    public ResponseEntity<Object> updateTopicTest(@RequestBody TopicTest topicTest) {
         return new ResponseEntity<>(topicTestService.updateTopicTest(topicTest), HttpStatus.OK);
     }
 
     @PostMapping("/createMultipleChoiceQuestion")
-    public ResponseEntity<Object> createMultipleChoiceQuestion(@RequestBody MultipleChoiceQuestion multipleChoiceQuestion) {
-        multipleChoiceQuestionRepository.save(multipleChoiceQuestion);
+    public ResponseEntity<Object> createMultipleChoiceQuestion(@RequestBody List<MultipleChoiceQuestion> questions) {
+        multipleChoiceQuestionRepository.saveAll(questions);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PostMapping("/createEssayQuestion")
-    public ResponseEntity<Object> createEssayQuestion(@RequestBody EssayQuestion essayQuestion) {
-        essayQuestionRepository.save(essayQuestion);
+    public ResponseEntity<Object> createEssayQuestion(@RequestBody List<EssayQuestion> questions) {
+        essayQuestionRepository.saveAll(questions);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 }
