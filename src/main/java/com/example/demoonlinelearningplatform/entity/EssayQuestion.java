@@ -19,6 +19,7 @@ public class EssayQuestion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private long questionNumber;
     private String content;
     private Long idTopicTest;
 }
