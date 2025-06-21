@@ -1,12 +1,15 @@
 package com.example.demoonlinelearningplatform.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Set;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -20,9 +23,9 @@ public class TopicTest {
     private Long id;
     private String testName;
     private String type;
-    private String content;
     private String status;
     private Long idCourse;
     private Long idLesson;
     private Long idTeacher;
+    private Date createDate;
 }

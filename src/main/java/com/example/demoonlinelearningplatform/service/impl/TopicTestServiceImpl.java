@@ -1,5 +1,6 @@
 package com.example.demoonlinelearningplatform.service.impl;
 
+import com.example.demoonlinelearningplatform.common.CommonConstant;
 import com.example.demoonlinelearningplatform.dto.TopicTestDTO;
 import com.example.demoonlinelearningplatform.entity.EssayQuestion;
 import com.example.demoonlinelearningplatform.entity.MultipleChoiceQuestion;
@@ -10,11 +11,13 @@ import com.example.demoonlinelearningplatform.repository.MultipleChoiceQuestionR
 import com.example.demoonlinelearningplatform.repository.TopicTestRepository;
 import com.example.demoonlinelearningplatform.service.TopicTestService;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,7 +31,16 @@ public class TopicTestServiceImpl implements TopicTestService {
 
     @Override
     public TopicTest createTopicTest(TopicTest request) {
-        return topicTestRepository.save(request);
+        Optional<TopicTest> topicTestOptional = topicTestRepository.getTopByIdLessonOrderByCreateDateDesc(request.getIdLesson());
+        if (topicTestOptional.isEmpty()) {
+            throw new InvalidException("Không tìm thấy");
+        }
+        if (CommonConstant.COMPLETE.equals(topicTestOptional.get().getStatus())) {
+            request.setCreateDate(new Date());
+            return topicTestRepository.save(request);
+        } else {
+            return topicTestOptional.get();
+        }
     }
 
     @Override
@@ -45,7 +57,14 @@ public class TopicTestServiceImpl implements TopicTestService {
 
     @Override
     public TopicTestDTO getDetailTopicTestByLesson(Long idLesson) {
-        Optional<TopicTest> topicTestOptional = topicTestRepository.getFirstByIdLesson(idLesson);
+        Optional<TopicTest> topicTestOptional = topicTestRepository.getTopByIdLessonOrderByCreateDateDesc(idLesson);
+        if (topicTestOptional.isEmpty()) throw new InvalidException("không tìm thấy đề");
+        return getData(topicTestOptional.get());
+    }
+
+    @Override
+    public TopicTestDTO findById(Long idTopicTest) {
+        Optional<TopicTest> topicTestOptional = topicTestRepository.findById(idTopicTest);
         if (topicTestOptional.isEmpty()) throw new InvalidException("không tìm thấy đề");
         return getData(topicTestOptional.get());
     }
@@ -66,5 +85,15 @@ public class TopicTestServiceImpl implements TopicTestService {
     @Override
     public TopicTest updateTopicTest(TopicTest request) {
         return topicTestRepository.save(request);
+    }
+
+    @Override
+    public TopicTest updateStatusTopicTest(String status, Long idTopicTest) {
+        Optional<TopicTest> topicTestOptional = topicTestRepository.findById(idTopicTest);
+        if (topicTestOptional.isEmpty()) {
+            throw new InvalidException("Không tìm thấy");
+        }
+        topicTestOptional.get().setStatus(CommonConstant.COMPLETE);
+        return topicTestRepository.save(topicTestOptional.get());
     }
 }

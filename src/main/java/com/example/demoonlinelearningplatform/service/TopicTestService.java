@@ -11,7 +11,11 @@ public interface TopicTestService {
 
     List<TopicTestDTO> getDetailTopicTestByCourse(Long idTopicTest);
 
-    TopicTestDTO getDetailTopicTestByLesson(Long idTopicTest);
+    TopicTestDTO getDetailTopicTestByLesson(Long idLesson);
+
+    TopicTestDTO findById(Long idTopicTest);
 
     TopicTest updateTopicTest(TopicTest request);
+
+    TopicTest updateStatusTopicTest(String status, Long idTopicTest);
 }

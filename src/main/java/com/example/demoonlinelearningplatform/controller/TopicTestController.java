@@ -9,6 +9,7 @@ import com.example.demoonlinelearningplatform.service.TopicTestService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -38,9 +39,19 @@ public class TopicTestController {
         return new ResponseEntity<>(topicTestService.getDetailTopicTestByLesson(idLesson), HttpStatus.OK);
     }
 
+    @GetMapping("/findById")
+    public ResponseEntity<Object> findById(@RequestParam Long idTopicTest) {
+        return new ResponseEntity<>(topicTestService.findById(idTopicTest), HttpStatus.OK);
+    }
+
     @PutMapping("/updateTopicTest")
     public ResponseEntity<Object> updateTopicTest(@RequestBody TopicTest topicTest) {
         return new ResponseEntity<>(topicTestService.updateTopicTest(topicTest), HttpStatus.OK);
+    }
+
+    @PutMapping("/updateStatusTopicTest")
+    public ResponseEntity<Object> updateStatusTopicTest(@RequestParam String status, @RequestParam Long idTopicTest) {
+        return new ResponseEntity<>(topicTestService.updateStatusTopicTest(status, idTopicTest), HttpStatus.OK);
     }
 
     @PostMapping("/createMultipleChoiceQuestion")
@@ -53,5 +64,19 @@ public class TopicTestController {
     public ResponseEntity<Object> createEssayQuestion(@RequestBody List<EssayQuestion> questions) {
         essayQuestionRepository.saveAll(questions);
         return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @GetMapping("/getMultipleChoiceQuestion")
+    public ResponseEntity<Object> getMultipleChoiceQuestion(@RequestParam Long idTopicTest) {
+        List<MultipleChoiceQuestion> questions = multipleChoiceQuestionRepository.getAllByIdTopicTest(idTopicTest);
+        if (CollectionUtils.isEmpty(questions)) questions = List.of();
+        return new ResponseEntity<>(questions, HttpStatus.OK);
+    }
+
+    @GetMapping("/getEssayQuestion")
+    public ResponseEntity<Object> getEssayQuestion(@RequestParam Long idTopicTest) {
+        List<EssayQuestion> questions = essayQuestionRepository.getAllByIdTopicTest(idTopicTest);
+        if (CollectionUtils.isEmpty(questions)) questions = List.of();
+        return new ResponseEntity<>(questions, HttpStatus.OK);
     }
 }

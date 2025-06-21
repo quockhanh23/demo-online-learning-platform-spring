@@ -12,5 +12,5 @@ public interface TopicTestRepository extends JpaRepository<TopicTest, Long> {
 
     List<TopicTest> getAllByIdCourse(Long idCourse);
 
-    Optional<TopicTest> getFirstByIdLesson(Long idLesson);
+    Optional<TopicTest> getTopByIdLessonOrderByCreateDateDesc(Long idLesson);
 }

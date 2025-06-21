@@ -9,6 +9,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Date;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -22,4 +24,5 @@ public class EssayQuestion {
     private long questionNumber;
     private String content;
     private Long idTopicTest;
+    private Date createDate = new Date();
 }
