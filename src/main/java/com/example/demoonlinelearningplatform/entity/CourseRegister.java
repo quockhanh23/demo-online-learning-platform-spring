@@ -1,10 +1,7 @@
 package com.example.demoonlinelearningplatform.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.validation.constraints.NotNull;
 import java.util.Date;
@@ -13,16 +10,18 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Entity
-public class Test {
+public class CourseRegister {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotNull
+    private Long idCourse;
+    @NotNull
+    private Long idUserRegister;
     @Column(length = 20)
     private String status;
-    private Date createdDate;
-    private Date updatedDate;
-    @NotNull
-    private Long idStudent;
-    private String studentName;
+    private Date createdDate = new Date();
 }

@@ -18,14 +18,21 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(length = 60)
     private String username;
+    @Column(length = 60)
     private String password;
+    @Column(length = 60)
     private String confirmPassword;
+    @Column(length = 200)
     private String fullName;
+    @Column(length = 200)
     private String email;
+    @Column(length = 20)
     private String phoneNumber;
     private Date createdDate;
     private Date updatedDate;
+    @Column(length = 20)
     private String status;
 
     @ManyToMany(fetch = FetchType.EAGER)

@@ -1,8 +1,10 @@
 package com.example.demoonlinelearningplatform.controller;
 
 import com.example.demoonlinelearningplatform.entity.Course;
+import com.example.demoonlinelearningplatform.service.CourseRegisterService;
 import com.example.demoonlinelearningplatform.service.CourseService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -16,13 +18,21 @@ import org.springframework.web.bind.annotation.*;
 public class CourseController {
 
     private final CourseService courseService;
+    private final CourseRegisterService courseRegisterService;
 
     @GetMapping("/getAllCourse")
     public ResponseEntity<Object> getAllCourse(@RequestParam(defaultValue = "0", required = false) int page,
                                                @RequestParam(defaultValue = "10", required = false) int size,
                                                @RequestParam(required = false) String searchText) {
         Pageable pageable = PageRequest.of(page, size);
-        return new ResponseEntity<>(HttpStatus.OK);
+        Page<Course> coursePage = courseService.getAllCoursePage(pageable, searchText);
+        return new ResponseEntity<>(coursePage, HttpStatus.OK);
+    }
+
+    @PostMapping("/registerCourse")
+    public ResponseEntity<Object> registerCourse(@RequestParam Long idCourse, @RequestParam Long idUserRegister) {
+        courseRegisterService.registerCourse(idCourse, idUserRegister);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PostMapping("/createCourse")

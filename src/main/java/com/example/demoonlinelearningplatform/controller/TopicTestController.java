@@ -3,8 +3,7 @@ package com.example.demoonlinelearningplatform.controller;
 import com.example.demoonlinelearningplatform.entity.EssayQuestion;
 import com.example.demoonlinelearningplatform.entity.MultipleChoiceQuestion;
 import com.example.demoonlinelearningplatform.entity.TopicTest;
-import com.example.demoonlinelearningplatform.repository.EssayQuestionRepository;
-import com.example.demoonlinelearningplatform.repository.MultipleChoiceQuestionRepository;
+import com.example.demoonlinelearningplatform.service.QuestionService;
 import com.example.demoonlinelearningplatform.service.TopicTestService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,8 +20,7 @@ import java.util.List;
 public class TopicTestController {
 
     private final TopicTestService topicTestService;
-    private final MultipleChoiceQuestionRepository multipleChoiceQuestionRepository;
-    private final EssayQuestionRepository essayQuestionRepository;
+    private final QuestionService questionService;
 
     @PostMapping("/createTopicTest")
     public ResponseEntity<Object> createTopicTest(@RequestBody TopicTest topicTest) {
@@ -56,26 +54,26 @@ public class TopicTestController {
 
     @PostMapping("/createMultipleChoiceQuestion")
     public ResponseEntity<Object> createMultipleChoiceQuestion(@RequestBody List<MultipleChoiceQuestion> questions) {
-        multipleChoiceQuestionRepository.saveAll(questions);
+        questionService.createMultipleChoiceQuestion(questions);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PostMapping("/createEssayQuestion")
     public ResponseEntity<Object> createEssayQuestion(@RequestBody List<EssayQuestion> questions) {
-        essayQuestionRepository.saveAll(questions);
+        questionService.createEssayQuestion(questions);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @GetMapping("/getMultipleChoiceQuestion")
     public ResponseEntity<Object> getMultipleChoiceQuestion(@RequestParam Long idTopicTest) {
-        List<MultipleChoiceQuestion> questions = multipleChoiceQuestionRepository.getAllByIdTopicTest(idTopicTest);
+        List<MultipleChoiceQuestion> questions = questionService.getAllByIdTopicTest(idTopicTest);
         if (CollectionUtils.isEmpty(questions)) questions = List.of();
         return new ResponseEntity<>(questions, HttpStatus.OK);
     }
 
     @GetMapping("/getEssayQuestion")
     public ResponseEntity<Object> getEssayQuestion(@RequestParam Long idTopicTest) {
-        List<EssayQuestion> questions = essayQuestionRepository.getAllByIdTopicTest(idTopicTest);
+        List<EssayQuestion> questions = questionService.getAllEssayQuestionByIdTopicTest(idTopicTest);
         if (CollectionUtils.isEmpty(questions)) questions = List.of();
         return new ResponseEntity<>(questions, HttpStatus.OK);
     }

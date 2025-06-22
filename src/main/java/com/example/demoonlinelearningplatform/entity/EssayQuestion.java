@@ -22,6 +22,7 @@ public class EssayQuestion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private long questionNumber;
+    // Câu hỏi
     private String content;
     private Long idTopicTest;
     private Date createDate = new Date();

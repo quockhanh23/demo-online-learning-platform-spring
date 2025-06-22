@@ -1,9 +1,6 @@
 package com.example.demoonlinelearningplatform.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,11 +17,13 @@ public class Lesson {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(length = 200)
     private String lessonName;
-    private String sourceUpload;
+    @Lob
     private String sourceUrl;
-    private Date createdDate;
+    private Date createdDate = new Date();
     private Date updatedDate;
+    @Column(length = 20)
     private String status;
     private Long idCourse;
 
