@@ -17,8 +17,11 @@ public class Lesson {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private long lessonNumber;
     @Column(length = 200)
     private String lessonName;
+    @Lob
+    private String image;
     @Lob
     private String sourceUrl;
     private Date createdDate = new Date();

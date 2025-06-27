@@ -17,4 +17,5 @@ public interface LessonRepository extends JpaRepository<Lesson, Long> {
     @Query(value = "select * from lesson WHERE id_course = :idCourse and lesson_name like CONCAT('%', :searchText, '%') ", nativeQuery = true)
     Page<Lesson> getAllLessonByCoursePage(Pageable pageable, @Param("searchText") String searchText, @Param("idCourse") Long idCourse);
 
+    int countAllByIdCourse(Long idCourse);
 }

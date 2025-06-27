@@ -1,6 +1,7 @@
 package com.example.demoonlinelearningplatform.controller;
 
 import com.example.demoonlinelearningplatform.entity.Course;
+import com.example.demoonlinelearningplatform.repository.CourseRegisterRepository;
 import com.example.demoonlinelearningplatform.service.CourseRegisterService;
 import com.example.demoonlinelearningplatform.service.CourseService;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @CrossOrigin("*")
 @RequestMapping("/api/courses")
@@ -19,6 +22,7 @@ public class CourseController {
 
     private final CourseService courseService;
     private final CourseRegisterService courseRegisterService;
+    private final CourseRegisterRepository courseRegisterRepository;
 
     @GetMapping("/getAllCourse")
     public ResponseEntity<Object> getAllCourse(@RequestParam(defaultValue = "0", required = false) int page,
@@ -43,6 +47,12 @@ public class CourseController {
     @GetMapping("/getDetailCourse")
     public ResponseEntity<Object> getDetailUser(@RequestParam Long idCourse) {
         return new ResponseEntity<>(courseService.getDetailCourse(idCourse), HttpStatus.OK);
+    }
+
+    @GetMapping("/checkRegister")
+    public ResponseEntity<Object> checkRegister(@RequestParam Long idCourse, @RequestParam Long idUserRegister) {
+        boolean check = courseRegisterRepository.existsAllByIdCourseAndIdUserRegister(idCourse, idUserRegister);
+        return new ResponseEntity<>( Map.of("value", check ? "1"  : "2"), HttpStatus.OK);
     }
 
     @PutMapping("/updateCourse")

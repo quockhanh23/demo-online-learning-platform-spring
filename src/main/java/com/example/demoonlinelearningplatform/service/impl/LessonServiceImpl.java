@@ -43,6 +43,8 @@ public class LessonServiceImpl implements LessonService {
         Optional<User> userOptional = userRepository.findById(idUser);
         if (userOptional.isEmpty()) throw new InvalidException("Người dùng không tồn tại");
         validateLesson(request);
+        int count = lessonRepository.countAllByIdCourse(request.getIdCourse());
+        request.setLessonNumber(count + 1);
         Lesson lesson = lessonRepository.save(request);
         createLessonLog(lesson, idUser);
         return lesson;
