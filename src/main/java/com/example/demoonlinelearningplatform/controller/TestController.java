@@ -1,5 +1,6 @@
 package com.example.demoonlinelearningplatform.controller;
 
+import com.example.demoonlinelearningplatform.dto.TestDTO;
 import com.example.demoonlinelearningplatform.entity.EssayAnswer;
 import com.example.demoonlinelearningplatform.entity.MultipleChoiceAnswer;
 import com.example.demoonlinelearningplatform.entity.Test;
@@ -31,6 +32,12 @@ public class TestController {
     @GetMapping("/getDetailTest")
     public ResponseEntity<Object> getDetailTest(@RequestParam Long idTest) {
         return new ResponseEntity<>(testService.getDetailTest(idTest), HttpStatus.OK);
+    }
+
+    @GetMapping("/getDetailTestByUserAndLesson")
+    public ResponseEntity<Object> getDetailTestByUserAndLesson(@RequestParam Long idUser, @RequestParam Long idLesson) {
+        List<TestDTO> testDTOS = testService.getAllTestByUserAndLesson(idUser, idLesson);
+        return new ResponseEntity<>(testDTOS, HttpStatus.OK);
     }
 
     @PostMapping("/createMultipleChoiceAnswer")

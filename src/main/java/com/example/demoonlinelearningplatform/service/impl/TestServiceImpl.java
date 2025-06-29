@@ -12,7 +12,9 @@ import com.example.demoonlinelearningplatform.service.TestService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,5 +42,26 @@ public class TestServiceImpl implements TestService {
         testDTO.setEssayAnswerList(essayAnswerList);
         testDTO.setMultipleChoiceAnswerList(multipleChoiceAnswerList);
         return testDTO;
+    }
+
+    @Override
+    public List<TestDTO> getAllTestByUserAndLesson(Long idUser, Long idLesson) {
+        List<TestDTO> dtoList = new ArrayList<>();
+        List<Test> testList = testRepository.getAllTestByIdStudentAndIdLesson(idUser, idLesson);
+        if (CollectionUtils.isEmpty(testList)) return List.of();
+        List<Long> listIdTest = testList.stream().map(Test::getId).toList();
+        List<MultipleChoiceAnswer> multipleChoiceAnswerList = multipleChoiceAnswerRepository.getAllByIdTestIn(listIdTest);
+        List<EssayAnswer> essayAnswerList = essayAnswerRepository.getAllByIdTestIn(listIdTest);
+        for (Test test : testList) {
+            TestDTO testDTO = new TestDTO();
+            BeanUtils.copyProperties(test, testDTO);
+            Long idTest = testDTO.getId();
+            testDTO.setEssayAnswerList(essayAnswerList.stream()
+                    .filter(item -> item.getIdTest().equals(idTest)).toList());
+            testDTO.setMultipleChoiceAnswerList(multipleChoiceAnswerList.stream()
+                    .filter(item -> item.getIdTest().equals(idTest)).toList());
+            dtoList.add(testDTO);
+        }
+        return dtoList;
     }
 }

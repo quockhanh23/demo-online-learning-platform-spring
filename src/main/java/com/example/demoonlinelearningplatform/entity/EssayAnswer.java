@@ -25,6 +25,7 @@ public class EssayAnswer {
     private Long idStudent;
     private Long idEssayQuestion;
     private Long idTopicTest;
+    private Long idLesson;
     private Long idTest;
     private Date createDate;
 }

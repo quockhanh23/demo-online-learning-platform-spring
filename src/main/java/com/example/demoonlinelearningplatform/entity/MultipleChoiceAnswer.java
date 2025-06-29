@@ -26,6 +26,7 @@ public class MultipleChoiceAnswer {
     private Long idStudent;
     private Long idMultipleChoiceQuestion;
     private Long idTopicTest;
+    private Long idLesson;
     private Long idTest;
     private Date createDate;
 }

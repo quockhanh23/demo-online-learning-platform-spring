@@ -52,7 +52,7 @@ public class CourseController {
     @GetMapping("/checkRegister")
     public ResponseEntity<Object> checkRegister(@RequestParam Long idCourse, @RequestParam Long idUserRegister) {
         boolean check = courseRegisterRepository.existsAllByIdCourseAndIdUserRegister(idCourse, idUserRegister);
-        return new ResponseEntity<>( Map.of("value", check ? "1"  : "2"), HttpStatus.OK);
+        return new ResponseEntity<>(Map.of("value", check ? "1" : "2"), HttpStatus.OK);
     }
 
     @PutMapping("/updateCourse")

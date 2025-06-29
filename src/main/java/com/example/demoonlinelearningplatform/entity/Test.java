@@ -24,5 +24,6 @@ public class Test {
     private Date updatedDate;
     @NotNull
     private Long idStudent;
+    private Long idLesson;
     private String studentName;
 }

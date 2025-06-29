@@ -36,6 +36,8 @@ public class MultipleChoiceQuestion {
     @NotNull
     private String correctAnswer;
     @NotNull
+    private String explainCorrectAnswer;
+    @NotNull
     private Long idTopicTest;
     private Date createDate = new Date();
 }

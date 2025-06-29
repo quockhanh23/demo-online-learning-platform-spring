@@ -8,4 +8,6 @@ import java.util.List;
 public interface EssayAnswerRepository extends JpaRepository<EssayAnswer, Long> {
     List<EssayAnswer> getAllByIdTest(Long idTest);
 
+    List<EssayAnswer> getAllByIdTestIn(List<Long> idTest);
+
 }
