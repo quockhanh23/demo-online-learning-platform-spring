@@ -26,4 +26,5 @@ public class Test {
     private Long idStudent;
     private Long idLesson;
     private String studentName;
+    private int time = 30;
 }

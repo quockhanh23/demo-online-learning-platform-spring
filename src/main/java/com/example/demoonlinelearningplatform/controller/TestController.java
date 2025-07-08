@@ -29,6 +29,11 @@ public class TestController {
         return new ResponseEntity<>(testService.createTest(test), HttpStatus.CREATED);
     }
 
+    @PostMapping("/updateTime")
+    public ResponseEntity<Object> updateTime(@RequestParam Long idTest, @RequestParam int time) {
+        return new ResponseEntity<>(testService.updateTime(idTest, time), HttpStatus.OK);
+    }
+
     @GetMapping("/getDetailTest")
     public ResponseEntity<Object> getDetailTest(@RequestParam Long idTest) {
         return new ResponseEntity<>(testService.getDetailTest(idTest), HttpStatus.OK);

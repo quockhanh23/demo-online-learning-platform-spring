@@ -9,6 +9,8 @@ public interface TestService {
 
     Test createTest(Test request);
 
+    Test updateTime(Long idTest, int time);
+
     TestDTO getDetailTest(Long idTest);
 
     List<TestDTO> getAllTestByUserAndLesson(Long idUser, Long idLesson);

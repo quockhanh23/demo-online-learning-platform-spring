@@ -32,6 +32,14 @@ public class TestServiceImpl implements TestService {
     }
 
     @Override
+    public Test updateTime(Long idTest, int time) {
+        Optional<Test> testOptional = testRepository.findById(idTest);
+        if (testOptional.isEmpty()) throw new InvalidException("không tìm thấy bài làm");
+        testOptional.get().setTime(time);
+        return testRepository.saveAndFlush(testOptional.get());
+    }
+
+    @Override
     public TestDTO getDetailTest(Long idTest) {
         Optional<Test> testOptional = testRepository.findById(idTest);
         if (testOptional.isEmpty()) throw new InvalidException("không tìm thấy bài làm");
