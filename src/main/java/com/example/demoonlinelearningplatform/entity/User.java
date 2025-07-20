@@ -34,6 +34,7 @@ public class User {
     private Date updatedDate;
     @Column(length = 20)
     private String status;
+    private String education;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_role",
