@@ -19,5 +19,6 @@ public class UserDTO {
     private Date updatedDate;
     private String status;
     private String education;
+    private String avatar;
     private Set<Role> roles;
 }
