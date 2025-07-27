@@ -1,14 +1,15 @@
 package com.example.demoonlinelearningplatform.dto;
 
 import com.example.demoonlinelearningplatform.entity.Role;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Date;
 import java.util.Set;
 
 @Getter
 @Setter
+@Builder
+@AllArgsConstructor
 public class UserDTO {
     private Long id;
     private String username;

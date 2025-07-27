@@ -2,6 +2,8 @@ package com.example.demoonlinelearningplatform.service;
 
 import com.example.demoonlinelearningplatform.dto.UserDTO;
 import com.example.demoonlinelearningplatform.entity.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface UserService {
 
@@ -12,4 +14,6 @@ public interface UserService {
     UserDTO getDetailUser(Long idUser);
 
     UserDTO updateUser(Long idUser, User user);
+
+    Page<UserDTO> getAllUserPage(Long idUserLogin, Pageable pageable, String searchText);
 }

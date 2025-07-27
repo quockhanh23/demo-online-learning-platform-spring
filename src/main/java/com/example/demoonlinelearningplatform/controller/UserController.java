@@ -22,12 +22,6 @@ public class UserController {
         return new ResponseEntity<>(userService.login(user), HttpStatus.OK);
     }
 
-    @PostMapping("/register")
-    public ResponseEntity<Object> createUser(@RequestBody User user, @RequestParam String role) {
-        UserDTO userDTO = userService.createUser(user, role);
-        return new ResponseEntity<>(userDTO, HttpStatus.CREATED);
-    }
-
     @GetMapping("/getDetailUser")
     public ResponseEntity<Object> getDetailUser(@RequestParam Long idUser) {
         return new ResponseEntity<>(userService.getDetailUser(idUser), HttpStatus.OK);
