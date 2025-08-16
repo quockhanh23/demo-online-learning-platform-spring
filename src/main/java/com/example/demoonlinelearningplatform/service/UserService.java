@@ -16,4 +16,8 @@ public interface UserService {
     UserDTO updateUser(Long idUser, User user);
 
     Page<UserDTO> getAllUserPage(Long idUserLogin, Pageable pageable, String searchText);
+
+    Page<UserDTO> getAllUserPageByRole(Pageable pageable, String role);
+
+    void actionUser(Long idAdmin, Long idUser, String action);
 }

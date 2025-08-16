@@ -15,4 +15,11 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query(value = "select * FROM user WHERE (id != :idUserLogin) and (username like CONCAT('%', :searchText, '%') or full_name like CONCAT('%', :searchText, '%'))", nativeQuery = true)
     Page<User> getAllUserPage(Pageable pageable, @Param("searchText") String searchText, @Param("idUserLogin") Long idUserLogin);
+
+    @Query(value = "select user.*\n" +
+            "from user\n" +
+            "         left join user_role ur on user.id = ur.user_id\n" +
+            "         left join role r on ur.role_id = r.id\n" +
+            "where (r.role_name = :role)", nativeQuery = true)
+    Page<User> getAllUserPageByRole(Pageable pageable, @Param("role") String role);
 }

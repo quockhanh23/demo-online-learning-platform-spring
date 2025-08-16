@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -35,6 +36,11 @@ public class LessonServiceImpl implements LessonService {
             lessonList = lessonRepository.getAllLessonByCoursePage(pageable, searchText, idCourse);
         }
         return lessonList;
+    }
+
+    @Override
+    public List<Lesson> getAllLessonByCourseList(Long idCourse, String searchText) {
+        return lessonRepository.findByIdCourse(idCourse, searchText);
     }
 
     @Override

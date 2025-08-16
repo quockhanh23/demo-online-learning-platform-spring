@@ -29,10 +29,21 @@ public class AdminController {
         return new ResponseEntity<>(userDTOS, HttpStatus.OK);
     }
 
+    @GetMapping("/getAllUserByRole")
+    public ResponseEntity<Object> getAllUserByRole(@RequestParam Long idUserLogin,
+                                                 @RequestParam(defaultValue = "0", required = false) int page,
+                                                 @RequestParam(defaultValue = "10", required = false) int size,
+                                                 @RequestParam(required = false) String role) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<UserDTO> userDTOS = userService.getAllUserPageByRole(pageable, role);
+        return new ResponseEntity<>(userDTOS, HttpStatus.OK);
+    }
+
     @PutMapping("/action")
     public ResponseEntity<Object> actionUser(@RequestParam Long idAdmin,
                                              @RequestParam Long idUser,
                                              @RequestParam String action) {
+        userService.actionUser(idAdmin, idUser, action);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

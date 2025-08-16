@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin("*")
 @RequestMapping("/api/lessons")
@@ -25,6 +27,13 @@ public class LessonController {
                                                        @RequestParam(required = false) String searchText) {
         Pageable pageable = PageRequest.of(page, size);
         Page<Lesson> lessonPage = lessonService.getAllLessonByCourse(pageable, idCourse, searchText);
+        return new ResponseEntity<>(lessonPage, HttpStatus.OK);
+    }
+
+    @GetMapping("/getAllLessonByCourseList")
+    public ResponseEntity<Object> getAllLessonByCourseList(@RequestParam Long idCourse,
+                                                           @RequestParam(required = false) String searchText) {
+        List<Lesson> lessonPage = lessonService.getAllLessonByCourseList(idCourse, searchText);
         return new ResponseEntity<>(lessonPage, HttpStatus.OK);
     }
 
