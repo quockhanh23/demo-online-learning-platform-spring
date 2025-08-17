@@ -20,11 +20,13 @@ public class Test {
     private Long id;
     @Column(length = 20)
     private String status;
-    private Date createdDate;
+    private Date createdDate = new Date();
     private Date updatedDate;
     @NotNull
     private Long idStudent;
+    @NotNull
     private Long idLesson;
+    private Long idTopicTest;
     private String studentName;
     private int time = 30;
 }

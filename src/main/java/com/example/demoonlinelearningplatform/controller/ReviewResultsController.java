@@ -6,16 +6,14 @@ import com.example.demoonlinelearningplatform.dto.TestDTO;
 import com.example.demoonlinelearningplatform.dto.TopicTestDTO;
 import com.example.demoonlinelearningplatform.entity.MultipleChoiceAnswer;
 import com.example.demoonlinelearningplatform.entity.MultipleChoiceQuestion;
-import com.example.demoonlinelearningplatform.service.QuestionService;
 import com.example.demoonlinelearningplatform.service.TestService;
 import com.example.demoonlinelearningplatform.service.TopicTestService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 @RestController
@@ -26,24 +24,18 @@ public class ReviewResultsController {
 
     private final TestService testService;
     private final TopicTestService topicTestService;
-    private final QuestionService questionService;
 
     @GetMapping("/getReviewResults")
-    public ResponseEntity<Object> getDetailTestByUserAndLesson(@RequestParam Long idTest, @RequestParam Long idLesson) {
+    public ResponseEntity<Object> getReviewResults(@RequestParam Long idTest, @RequestParam Long idLesson) {
         TestDTO testDTOS = testService.getDetailTest(idTest);
         TopicTestDTO topicTestDTO = topicTestService.getDetailTopicTestByLesson(idLesson);
         ReviewResults reviewResults = new ReviewResults();
+        int correctAnswer = 0;
         for (int i = 0; i < topicTestDTO.getMultipleChoiceQuestionList().size(); i++) {
             MultipleChoiceQuestion choiceQuestion = topicTestDTO.getMultipleChoiceQuestionList().get(i);
             MultipleChoice multipleChoice = new MultipleChoice();
-            multipleChoice.setAnswer1(topicTestDTO.getMultipleChoiceQuestionList().get(i).getAnswer1());
-            multipleChoice.setAnswer2(topicTestDTO.getMultipleChoiceQuestionList().get(i).getAnswer2());
-            multipleChoice.setAnswer3(topicTestDTO.getMultipleChoiceQuestionList().get(i).getAnswer3());
-            multipleChoice.setAnswer4(topicTestDTO.getMultipleChoiceQuestionList().get(i).getAnswer4());
-            multipleChoice.setCorrectAnswer(topicTestDTO.getMultipleChoiceQuestionList().get(i).getCorrectAnswer());
-            multipleChoice.setExplainCorrectAnswer(topicTestDTO.getMultipleChoiceQuestionList().get(i).getExplainCorrectAnswer());
+            BeanUtils.copyProperties(topicTestDTO.getMultipleChoiceQuestionList().get(i), multipleChoice);
             multipleChoice.setQuestion(topicTestDTO.getMultipleChoiceQuestionList().get(i).getContent());
-
             MultipleChoiceAnswer multipleChoiceAnswer = testDTOS.getMultipleChoiceAnswerList()
                     .stream()
                     .filter(item -> item.getQuestionNumber() == choiceQuestion.getQuestionNumber())
@@ -51,8 +43,9 @@ public class ReviewResultsController {
 
             multipleChoice.setAnswerOfStudent(Objects.isNull(multipleChoiceAnswer) ? "" : multipleChoiceAnswer.getAnswer());
             reviewResults.getMultipleChoices().add(multipleChoice);
+            if (multipleChoice.getCorrectAnswer().equals(multipleChoice.getAnswerOfStudent())) correctAnswer = correctAnswer + 1;
         }
-
+        reviewResults.setTotalCorrectAnswer(correctAnswer);
         return new ResponseEntity<>(reviewResults, HttpStatus.OK);
     }
 }

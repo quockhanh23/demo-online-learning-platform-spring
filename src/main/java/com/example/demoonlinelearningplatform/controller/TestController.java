@@ -7,6 +7,7 @@ import com.example.demoonlinelearningplatform.entity.Test;
 import com.example.demoonlinelearningplatform.repository.EssayAnswerRepository;
 import com.example.demoonlinelearningplatform.repository.MultipleChoiceAnswerRepository;
 import com.example.demoonlinelearningplatform.service.TestService;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,6 +38,11 @@ public class TestController {
     @GetMapping("/getDetailTest")
     public ResponseEntity<Object> getDetailTest(@RequestParam Long idTest) {
         return new ResponseEntity<>(testService.getDetailTest(idTest), HttpStatus.OK);
+    }
+
+    @GetMapping("/getDetailTestByIdUserAndIdTopicTest")
+    public ResponseEntity<Object> getDetailTestByIdUserAndIdTopicTest(@RequestParam Long idUser, @RequestParam Long idTopicTest) {
+        return new ResponseEntity<>(testService.getDetailTestByIdUserAndIdTopicTest(idUser, idTopicTest), HttpStatus.OK);
     }
 
     @GetMapping("/getDetailTestByUserAndLesson")

@@ -11,4 +11,5 @@ import java.util.List;
 public class ReviewResults {
     private List<Essay> essays = new ArrayList<>();
     private List<MultipleChoice> multipleChoices = new ArrayList<>();
+    private int totalCorrectAnswer;
 }

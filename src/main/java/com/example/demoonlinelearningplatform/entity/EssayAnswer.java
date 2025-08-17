@@ -27,5 +27,5 @@ public class EssayAnswer {
     private Long idTopicTest;
     private Long idLesson;
     private Long idTest;
-    private Date createDate;
+    private Date createDate = new Date();
 }

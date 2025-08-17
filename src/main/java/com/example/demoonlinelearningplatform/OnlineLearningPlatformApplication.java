@@ -15,11 +15,11 @@ import java.util.Objects;
 import java.util.Set;
 
 @SpringBootApplication
-public class DemoOnlineLearningPlatformApplication {
+public class OnlineLearningPlatformApplication {
 
     public static void main(String[] args) {
         try {
-            SpringApplication.run(DemoOnlineLearningPlatformApplication.class, args);
+            SpringApplication.run(OnlineLearningPlatformApplication.class, args);
         } catch (Exception e) {
             e.printStackTrace();
         }

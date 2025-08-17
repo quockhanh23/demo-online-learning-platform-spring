@@ -14,4 +14,6 @@ public class MultipleChoice {
     private String correctAnswer;
     private String explainCorrectAnswer;
     private String answerOfStudent;
+    private long questionNumber;
+
 }

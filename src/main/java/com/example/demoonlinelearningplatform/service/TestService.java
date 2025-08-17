@@ -13,5 +13,7 @@ public interface TestService {
 
     TestDTO getDetailTest(Long idTest);
 
+    TestDTO getDetailTestByIdUserAndIdTopicTest(Long idUser, Long idTopicTest);
+
     List<TestDTO> getAllTestByUserAndLesson(Long idUser, Long idLesson);
 }
