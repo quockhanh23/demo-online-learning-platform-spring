@@ -33,6 +33,16 @@ public class CourseController {
         return new ResponseEntity<>(coursePage, HttpStatus.OK);
     }
 
+    @GetMapping("/getAllRegisterCourse")
+    public ResponseEntity<Object> getAllRegisterCourse(@RequestParam Long idUserRegister) {
+        return new ResponseEntity<>(courseRegisterService.getAllRegisterCourse(idUserRegister), HttpStatus.OK);
+    }
+
+    @GetMapping("/getAllInformation")
+    public ResponseEntity<Object> getAllInformation(@RequestParam Long idUser, @RequestParam Long idLesson) {
+        return new ResponseEntity<>(courseRegisterService.getAllInformation(idUser, idLesson), HttpStatus.OK);
+    }
+
     @PostMapping("/registerCourse")
     public ResponseEntity<Object> registerCourse(@RequestParam Long idCourse, @RequestParam Long idUserRegister) {
         courseRegisterService.registerCourse(idCourse, idUserRegister);

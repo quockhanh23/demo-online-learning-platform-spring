@@ -2,12 +2,15 @@ package com.example.demoonlinelearningplatform.service.impl;
 
 import com.example.demoonlinelearningplatform.entity.Lesson;
 import com.example.demoonlinelearningplatform.entity.LessonLog;
+import com.example.demoonlinelearningplatform.entity.Test;
 import com.example.demoonlinelearningplatform.entity.User;
 import com.example.demoonlinelearningplatform.exption.InvalidException;
 import com.example.demoonlinelearningplatform.repository.LessonLogRepository;
 import com.example.demoonlinelearningplatform.repository.LessonRepository;
+import com.example.demoonlinelearningplatform.repository.TestRepository;
 import com.example.demoonlinelearningplatform.repository.UserRepository;
 import com.example.demoonlinelearningplatform.service.LessonService;
+import com.example.demoonlinelearningplatform.service.TopicTestService;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
@@ -15,6 +18,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -26,6 +30,8 @@ public class LessonServiceImpl implements LessonService {
     private final LessonRepository lessonRepository;
     private final LessonLogRepository lessonLogRepository;
     private final UserRepository userRepository;
+    private final TestRepository testRepository;
+    private final TopicTestService topicTestService;
 
     @Override
     public Page<Lesson> getAllLessonByCourse(Pageable pageable, Long idCourse, String searchText) {
@@ -79,6 +85,15 @@ public class LessonServiceImpl implements LessonService {
         lessonOptional.get().setUpdatedDate(new Date());
         createLessonLog(request, idUser);
         return lessonRepository.save(lessonOptional.get());
+    }
+
+    @Override
+    public Test highestPointLesson(Long idLesson, Long idUser) {
+        List<Test> testDTOS = testRepository.getAllTestByIdStudentAndIdLesson(idUser, idLesson);
+        Test test = testDTOS.stream()
+                .max(Comparator.comparingInt(Test::getScore))
+                .orElse(null);
+        return test;
     }
 
     private void createLessonLog(Lesson request, Long idUser) {

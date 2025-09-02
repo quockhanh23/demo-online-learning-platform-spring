@@ -1,6 +1,7 @@
 package com.example.demoonlinelearningplatform.service;
 
 import com.example.demoonlinelearningplatform.entity.Lesson;
+import com.example.demoonlinelearningplatform.entity.Test;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -17,4 +18,6 @@ public interface LessonService {
     Lesson getDetailLesson(Long idLesson);
 
     Lesson updateLesson(Lesson request, Long idUser);
+
+    Test highestPointLesson(Long idLesson, Long idUser);
 }

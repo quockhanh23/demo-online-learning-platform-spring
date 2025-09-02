@@ -28,5 +28,7 @@ public class Test {
     private Long idLesson;
     private Long idTopicTest;
     private String studentName;
+    private int score;
+    private String scoreString;
     private int time = 30;
 }

@@ -51,4 +51,9 @@ public class LessonController {
     public ResponseEntity<Object> updateLesson(@RequestBody Lesson lesson, @RequestParam Long idUser) {
         return new ResponseEntity<>(lessonService.updateLesson(lesson, idUser), HttpStatus.OK);
     }
+
+    @GetMapping("/highestPointLesson")
+    public ResponseEntity<Object> highestPointLesson(@RequestParam Long idLesson, @RequestParam Long idUser) {
+        return new ResponseEntity<>(lessonService.highestPointLesson(idLesson, idUser), HttpStatus.OK);
+    }
 }

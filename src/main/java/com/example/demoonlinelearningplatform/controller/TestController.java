@@ -1,19 +1,25 @@
 package com.example.demoonlinelearningplatform.controller;
 
 import com.example.demoonlinelearningplatform.dto.TestDTO;
+import com.example.demoonlinelearningplatform.dto.TopicTestDTO;
 import com.example.demoonlinelearningplatform.entity.EssayAnswer;
 import com.example.demoonlinelearningplatform.entity.MultipleChoiceAnswer;
+import com.example.demoonlinelearningplatform.entity.MultipleChoiceQuestion;
 import com.example.demoonlinelearningplatform.entity.Test;
+import com.example.demoonlinelearningplatform.exption.InvalidException;
 import com.example.demoonlinelearningplatform.repository.EssayAnswerRepository;
 import com.example.demoonlinelearningplatform.repository.MultipleChoiceAnswerRepository;
+import com.example.demoonlinelearningplatform.repository.TestRepository;
 import com.example.demoonlinelearningplatform.service.TestService;
-import lombok.Getter;
+import com.example.demoonlinelearningplatform.service.TopicTestService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin("*")
@@ -22,6 +28,8 @@ import java.util.List;
 public class TestController {
 
     private final TestService testService;
+    private final TopicTestService topicTestService;
+    private final TestRepository testRepository;
     private final MultipleChoiceAnswerRepository multipleChoiceAnswerRepository;
     private final EssayAnswerRepository essayAnswerRepository;
 
@@ -53,7 +61,25 @@ public class TestController {
 
     @PostMapping("/createMultipleChoiceAnswer")
     public ResponseEntity<Object> createMultipleChoiceAnswer(@RequestBody List<MultipleChoiceAnswer> answers) {
+        if (CollectionUtils.isEmpty(answers)) throw new InvalidException("Danh sách trống");
         multipleChoiceAnswerRepository.saveAll(answers);
+        TopicTestDTO topicTestDTO = topicTestService.getDetailTopicTestByLesson(answers.get(0).getIdLesson());
+        List<MultipleChoiceQuestion> multipleChoiceQuestions = topicTestDTO.getMultipleChoiceQuestionList();
+        int count = 0;
+        for (MultipleChoiceQuestion multipleChoiceQuestion : multipleChoiceQuestions) {
+            String correctAnswer = multipleChoiceQuestion.getCorrectAnswer();
+            String answerOfStudent = answers.stream().filter(item -> item.getQuestionNumber() == multipleChoiceQuestion
+                    .getQuestionNumber()).findFirst().map(MultipleChoiceAnswer::getAnswer).orElse(null);
+            if (correctAnswer.equals(answerOfStudent)) {
+                count = count + 1;
+            }
+        }
+        Optional<Test> test = testRepository.findById(answers.get(0).getIdTest());
+        if (test.isPresent()) {
+            test.get().setScore(count);
+            test.get().setScoreString(count + "/" + answers.size());
+            testRepository.save(test.get());
+        }
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
