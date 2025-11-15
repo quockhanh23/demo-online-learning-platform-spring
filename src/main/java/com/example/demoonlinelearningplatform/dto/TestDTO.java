@@ -21,5 +21,8 @@ public class TestDTO {
     private Long idStudent;
     private List<EssayAnswer> essayAnswerList;
     private List<MultipleChoiceAnswer> multipleChoiceAnswerList;
+    private int time;
+    private int score;
+    private String scoreString;
 
 }

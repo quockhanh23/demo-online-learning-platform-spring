@@ -6,7 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Set;
+import javax.validation.constraints.NotNull;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -18,11 +19,18 @@ public class TopicTest {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(length = 300)
     private String testName;
+    @Column(length = 20)
+    // Đề 1 tiết hoặc các bài kiểm tra khác
     private String type;
-    private String content;
+    @Column(length = 20)
     private String status;
+    @NotNull
     private Long idCourse;
+    @NotNull
     private Long idLesson;
+    @NotNull
     private Long idTeacher;
+    private Date createDate = new Date();
 }

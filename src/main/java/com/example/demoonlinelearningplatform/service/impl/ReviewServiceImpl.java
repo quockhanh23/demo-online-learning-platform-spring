@@ -1,6 +1,7 @@
 package com.example.demoonlinelearningplatform.service.impl;
 
 import com.example.demoonlinelearningplatform.entity.Review;
+import com.example.demoonlinelearningplatform.exption.InvalidException;
 import com.example.demoonlinelearningplatform.repository.ReviewRepository;
 import com.example.demoonlinelearningplatform.service.ReviewService;
 import lombok.RequiredArgsConstructor;
@@ -12,29 +13,38 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ReviewServiceImpl implements ReviewService {
 
-    private ReviewRepository reviewRepository;
+    private final ReviewRepository reviewRepository;
 
     @Override
     public Review createReview(Review request) {
+        validateReview(request);
         return reviewRepository.save(request);
+    }
+
+    void validateReview(Review request) {
+        if (request.getContent().length() > 500) throw new InvalidException("Nội dung đánh giá không quá 500 kí tự");
     }
 
     @Override
     public Review getDetailReview(Long idReview) {
-        return reviewRepository.findById(idReview).get();
+        Optional<Review> reviewOptional = reviewRepository.findById(idReview);
+        if (reviewOptional.isEmpty()) throw new InvalidException("Không tìm thấy");
+        return reviewOptional.get();
     }
 
     @Override
     public Review updateReview(Review request) {
         Optional<Review> reviewOptional = reviewRepository.findById(request.getId());
+        if (reviewOptional.isEmpty()) throw new InvalidException("Không tìm thấy");
+        validateReview(request);
         reviewOptional.get().setContent(request.getContent());
-        reviewRepository.save(reviewOptional.get());
-        return null;
+        return reviewRepository.save(reviewOptional.get());
     }
 
     @Override
     public void softDeleteReview(Long idReview) {
         Optional<Review> reviewOptional = reviewRepository.findById(idReview);
+        if (reviewOptional.isEmpty()) throw new InvalidException("Không tìm thấy");
         reviewOptional.get().setStatus("");
         reviewRepository.save(reviewOptional.get());
     }

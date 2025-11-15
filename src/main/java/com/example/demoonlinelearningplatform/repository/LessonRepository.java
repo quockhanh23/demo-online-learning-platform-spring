@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface LessonRepository extends JpaRepository<Lesson, Long> {
 
@@ -17,4 +19,10 @@ public interface LessonRepository extends JpaRepository<Lesson, Long> {
     @Query(value = "select * from lesson WHERE id_course = :idCourse and lesson_name like CONCAT('%', :searchText, '%') ", nativeQuery = true)
     Page<Lesson> getAllLessonByCoursePage(Pageable pageable, @Param("searchText") String searchText, @Param("idCourse") Long idCourse);
 
+    int countAllByIdCourse(Long idCourse);
+
+    @Query(value = "select * from lesson WHERE id_course = :idCourse and lesson_name like CONCAT('%', :searchText, '%') ", nativeQuery = true)
+    List<Lesson> findByIdCourse(Long idCourse, @Param("searchText") String searchText);
+
+    List<Lesson> findByIdCourse(Long idCourse);
 }

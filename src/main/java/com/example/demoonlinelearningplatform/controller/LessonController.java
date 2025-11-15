@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin("*")
 @RequestMapping("/api/lessons")
@@ -28,6 +30,13 @@ public class LessonController {
         return new ResponseEntity<>(lessonPage, HttpStatus.OK);
     }
 
+    @GetMapping("/getAllLessonByCourseList")
+    public ResponseEntity<Object> getAllLessonByCourseList(@RequestParam Long idCourse,
+                                                           @RequestParam(required = false) String searchText) {
+        List<Lesson> lessonPage = lessonService.getAllLessonByCourseList(idCourse, searchText);
+        return new ResponseEntity<>(lessonPage, HttpStatus.OK);
+    }
+
     @PostMapping("/createLesson")
     public ResponseEntity<Object> createLesson(@RequestBody Lesson lesson, @RequestParam Long idUser) {
         return new ResponseEntity<>(lessonService.createLesson(lesson, idUser), HttpStatus.CREATED);
@@ -41,5 +50,10 @@ public class LessonController {
     @PutMapping("/updateLesson")
     public ResponseEntity<Object> updateLesson(@RequestBody Lesson lesson, @RequestParam Long idUser) {
         return new ResponseEntity<>(lessonService.updateLesson(lesson, idUser), HttpStatus.OK);
+    }
+
+    @GetMapping("/highestPointLesson")
+    public ResponseEntity<Object> highestPointLesson(@RequestParam Long idLesson, @RequestParam Long idUser) {
+        return new ResponseEntity<>(lessonService.highestPointLesson(idLesson, idUser), HttpStatus.OK);
     }
 }

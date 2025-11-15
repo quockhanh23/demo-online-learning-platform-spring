@@ -1,9 +1,6 @@
 package com.example.demoonlinelearningplatform.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,5 +25,6 @@ public class LessonLog {
     private Long idUserAction;
     private Date createdDate;
     private Date updatedDate;
+    @Column(length = 20)
     private String status;
 }

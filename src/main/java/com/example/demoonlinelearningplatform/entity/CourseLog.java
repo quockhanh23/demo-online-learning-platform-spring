@@ -1,9 +1,6 @@
 package com.example.demoonlinelearningplatform.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Date;
@@ -24,8 +21,9 @@ public class CourseLog {
     private String logo;
     private Date startDate;
     private Date endDate;
-    private Date createdDate;
+    private Date createdDate = new Date();
     private Date updatedDate;
     private Long idUserAction;
+    @Column(length = 20)
     private String status;
 }

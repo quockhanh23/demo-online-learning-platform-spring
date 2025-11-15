@@ -9,6 +9,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Date;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -24,5 +26,7 @@ public class MultipleChoiceAnswer {
     private Long idStudent;
     private Long idMultipleChoiceQuestion;
     private Long idTopicTest;
+    private Long idLesson;
     private Long idTest;
+    private Date createDate = new Date();
 }
