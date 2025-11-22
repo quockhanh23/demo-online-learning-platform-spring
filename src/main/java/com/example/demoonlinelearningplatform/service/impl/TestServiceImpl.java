@@ -9,6 +9,7 @@ import com.example.demoonlinelearningplatform.repository.*;
 import com.example.demoonlinelearningplatform.service.TestService;
 import com.example.demoonlinelearningplatform.service.TopicTestService;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -97,6 +98,9 @@ public class TestServiceImpl implements TestService {
                     .filter(item -> item.getIdTest().equals(idTest)).toList());
             testDTO.setMultipleChoiceAnswerList(multipleChoiceAnswerList.stream()
                     .filter(item -> item.getIdTest().equals(idTest)).toList());
+            if (StringUtils.isEmpty(testDTO.getScoreString())) {
+                testDTO.setScoreString("0" + "/" + testDTO.getMultipleChoiceAnswerList().size());
+            }
             dtoList.add(testDTO);
         }
         return dtoList;

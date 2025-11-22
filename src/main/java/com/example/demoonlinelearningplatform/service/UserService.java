@@ -1,5 +1,6 @@
 package com.example.demoonlinelearningplatform.service;
 
+import com.example.demoonlinelearningplatform.dto.ChangePassword;
 import com.example.demoonlinelearningplatform.dto.UserDTO;
 import com.example.demoonlinelearningplatform.entity.User;
 import org.springframework.data.domain.Page;
@@ -20,4 +21,6 @@ public interface UserService {
     Page<UserDTO> getAllUserPageByRole(Pageable pageable, String role);
 
     void actionUser(Long idAdmin, Long idUser, String action);
+
+    void changePassword(ChangePassword changePassword, Long idUser);
 }

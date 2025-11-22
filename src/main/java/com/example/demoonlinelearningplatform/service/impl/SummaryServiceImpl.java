@@ -45,18 +45,20 @@ public class SummaryServiceImpl implements SummaryService {
                     .map(test1 -> String.valueOf(test1.getScore()))
                     .forEach(strings::add);
             summary.setScores(strings);
-
-            double sum = strings.stream()
-                    .mapToDouble(Double::parseDouble)
-                    .sum();
-            sum = sum / strings.size();
+            double sum = 0;
+            if (!CollectionUtils.isEmpty(strings)) {
+                sum = strings.stream()
+                        .mapToDouble(Double::parseDouble)
+                        .sum();
+                sum = sum / strings.size();
+            }
             summary.setFinalScore(String.valueOf(sum));
 
             courseRegisters.stream().filter(t -> t.getIdCourse().equals(course.getId()))
                     .findFirst().ifPresent(courseRegister -> {
-                summary.setStatus(courseRegister.getStatus());
-                summary.setStartDate(courseRegister.getCreatedDate());
-            });
+                        summary.setStatus(courseRegister.getStatus());
+                        summary.setStartDate(courseRegister.getCreatedDate());
+                    });
             summaryList.add(summary);
         }
         return summaryList;

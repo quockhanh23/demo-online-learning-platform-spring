@@ -2,6 +2,7 @@ package com.example.demoonlinelearningplatform.service.impl;
 
 import com.example.demoonlinelearningplatform.common.CommonConstant;
 import com.example.demoonlinelearningplatform.common.RoleConstant;
+import com.example.demoonlinelearningplatform.dto.ChangePassword;
 import com.example.demoonlinelearningplatform.dto.UserDTO;
 import com.example.demoonlinelearningplatform.entity.Role;
 import com.example.demoonlinelearningplatform.entity.User;
@@ -129,10 +130,27 @@ public class UserServiceImpl implements UserService {
         Optional<User> userOptional = userRepository.findById(idUser);
         if (userOptional.isEmpty()) throw new InvalidException("Không có người dùng này");
         List<String> listAction = List.of(CommonConstant.ACTIVE, CommonConstant.BANED, CommonConstant.INACTIVE);
-        if (!listAction.contains(action))  {
+        if (!listAction.contains(action)) {
             throw new InvalidException("Không có action này");
         }
         userOptional.get().setStatus(action);
+        userRepository.save(userOptional.get());
+    }
+
+    @Override
+    public void changePassword(ChangePassword changePassword, Long idUser) {
+        Optional<User> userOptional = userRepository.findById(idUser);
+        if (userOptional.isEmpty()) throw new InvalidException("Không có người dùng này");
+
+        if (!userOptional.get().getPassword().equals(changePassword.getOldPassword())) {
+            throw new InvalidException("Mật khẩu không đúng");
+        }
+        if (!changePassword.getNewPassword().equals(changePassword.getConfirmPassword())) {
+            throw new InvalidException("Mật khẩu mới và xác nhận mật khẩu mới không trùng khớp");
+        }
+        userOptional.get().setPassword(changePassword.getNewPassword());
+        userOptional.get().setConfirmPassword(changePassword.getConfirmPassword());
+        userOptional.get().setUpdatedDate(new Date());
         userRepository.save(userOptional.get());
     }
 

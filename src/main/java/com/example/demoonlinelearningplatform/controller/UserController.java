@@ -1,7 +1,6 @@
 package com.example.demoonlinelearningplatform.controller;
 
 import com.example.demoonlinelearningplatform.dto.ChangePassword;
-import com.example.demoonlinelearningplatform.dto.UserDTO;
 import com.example.demoonlinelearningplatform.entity.User;
 import com.example.demoonlinelearningplatform.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -34,6 +33,7 @@ public class UserController {
 
     @PutMapping("/changePassword")
     public ResponseEntity<Object> changePassword(@RequestParam Long idUser, @RequestBody ChangePassword changePassword) {
+        userService.changePassword(changePassword, idUser);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
