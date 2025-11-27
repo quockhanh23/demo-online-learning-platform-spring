@@ -10,6 +10,9 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Controller này dùng để lưu trữ video bằng việc gọi đến 1 kho lưu trữ đám mây miễn phí nhưng có giới hạn upload hàng tháng
+ */
 @RestController
 @CrossOrigin("*")
 @RequestMapping("/api/cloudinary")
@@ -28,6 +31,11 @@ public class CloudinaryController {
         ));
     }
 
+    /**
+     * API này dùng để lấy thông tin bảo mật của Cloudinary
+     *
+     * @return thông tin của tài khoản đã đăng kí ở Cloud
+     */
     @GetMapping("/signature")
     public ResponseEntity<Map<String, String>> getSignature() {
         long timestamp = System.currentTimeMillis() / 1000;
@@ -46,6 +54,12 @@ public class CloudinaryController {
         return ResponseEntity.ok(response);
     }
 
+    /**
+     * API này dùng để xóa video đã upload lên Cloud
+     *
+     * @param publicId: id của video
+     * @return message
+     */
     @DeleteMapping("/delete")
     public ResponseEntity<String> deleteVideo(@RequestParam String publicId) {
         try {
@@ -61,7 +75,11 @@ public class CloudinaryController {
         }
     }
 
-    // Kiểm tra xem đã có bao nhiêu dung lượng
+    /**
+     * API này dùng kiểm tra xem đã có bao nhiêu dung lượng
+     *
+     * @return thông tin
+     */
     @GetMapping("/usage")
     public ResponseEntity<?> getUsageInfo() {
         try {
@@ -82,7 +100,5 @@ public class CloudinaryController {
             return ResponseEntity.status(500).body("Lỗi lấy thông tin quota: " + e.getMessage());
         }
     }
-
-
 }
 

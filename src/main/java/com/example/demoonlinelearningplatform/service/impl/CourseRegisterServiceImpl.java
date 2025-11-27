@@ -56,10 +56,4 @@ public class CourseRegisterServiceImpl implements CourseRegisterService {
         if (CollectionUtils.isEmpty(courseRegisters)) return List.of();
         return courseRegisters;
     }
-
-    @Override
-    public CourseInformation getAllInformation(Long idUser, Long idLesson) {
-
-        return null;
-    }
 }

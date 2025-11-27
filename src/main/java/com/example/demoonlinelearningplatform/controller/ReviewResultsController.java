@@ -25,6 +25,13 @@ public class ReviewResultsController {
     private final TestService testService;
     private final TopicTestService topicTestService;
 
+    /**
+     * Xem lại toàn bộ số điểm của 1 bài học
+     *
+     * @param idTest:   id của bài kiểm tra
+     * @param idLesson: id của bài học
+     * @return 1 đối tượng chứa các kết quả của bài kiểm tra
+     */
     @GetMapping("/getReviewResults")
     public ResponseEntity<Object> getReviewResults(@RequestParam Long idTest, @RequestParam Long idLesson) {
         TestDTO testDTOS = testService.getDetailTest(idTest);
@@ -43,7 +50,8 @@ public class ReviewResultsController {
 
             multipleChoice.setAnswerOfStudent(Objects.isNull(multipleChoiceAnswer) ? "" : multipleChoiceAnswer.getAnswer());
             reviewResults.getMultipleChoices().add(multipleChoice);
-            if (multipleChoice.getCorrectAnswer().equals(multipleChoice.getAnswerOfStudent())) correctAnswer = correctAnswer + 1;
+            if (multipleChoice.getCorrectAnswer().equals(multipleChoice.getAnswerOfStudent()))
+                correctAnswer = correctAnswer + 1;
         }
         reviewResults.setTotalCorrectAnswer(correctAnswer);
         return new ResponseEntity<>(reviewResults, HttpStatus.OK);

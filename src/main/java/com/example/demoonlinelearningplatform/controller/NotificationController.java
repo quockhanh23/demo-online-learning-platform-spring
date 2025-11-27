@@ -19,6 +19,12 @@ public class NotificationController {
 
     private final NotificationRepository notificationRepository;
 
+    /**
+     * Tạo mới thông báo
+     *
+     * @param notification: dữ liệu
+     * @return void
+     */
     @PostMapping("/createNotification")
     public ResponseEntity<Object> createNotification(@RequestBody Notification notification) {
         notification.setCreatedDate(new Date());
@@ -27,11 +33,12 @@ public class NotificationController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @GetMapping("/getNotification")
-    public ResponseEntity<Object> getNotification(@RequestParam Long idNotification) {
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
+    /**
+     * Cập nhật thông tin thông báo
+     *
+     * @param notification: dữ liệu
+     * @return void
+     */
     @PutMapping("/updateNotification")
     public ResponseEntity<Object> updateNotification(@RequestBody Notification notification) {
         notification.setUpdatedDate(new Date());
@@ -39,6 +46,12 @@ public class NotificationController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    /**
+     * Cập nhật trạng thái của toàn bộ thông báo
+     *
+     * @param ids: danh sách id của các đối tượng Notification
+     * @return void
+     */
     @PutMapping("/updateStatus")
     public ResponseEntity<Object> updateStatus(@RequestBody List<Long> ids) {
         List<Notification> list = notificationRepository.findAllByIdIn(ids);

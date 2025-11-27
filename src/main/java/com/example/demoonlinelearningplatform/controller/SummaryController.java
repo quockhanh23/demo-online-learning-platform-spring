@@ -18,6 +18,16 @@ public class SummaryController {
 
     private final SummaryService summaryService;
 
+    /**
+     * Bảng thông tin tổng quan về các khóa học đã đăng kí
+     * Bao gồm trạng thái khóa học (đã học xong hay chưa xong), điểm các bài học trong khóa học...
+     *
+     * @param idUserLogin: id của người dùng đang đăng nhập
+     * @param page:        trang hiện tại
+     * @param size:        số phần tử trong 1 Trang
+     * @param searchText:  search value
+     * @return danh sách thông tin tổng quan
+     */
     @GetMapping("/courseSummary")
     public ResponseEntity<Object> courseSummary(@RequestParam Long idUserLogin,
                                                 @RequestParam(defaultValue = "0", required = false) int page,
