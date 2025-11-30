@@ -6,7 +6,7 @@ import com.example.demoonlinelearningplatform.entities.EssayAnswer;
 import com.example.demoonlinelearningplatform.entities.MultipleChoiceAnswer;
 import com.example.demoonlinelearningplatform.entities.MultipleChoiceQuestion;
 import com.example.demoonlinelearningplatform.entities.Test;
-import com.example.demoonlinelearningplatform.exception.InvalidException;
+import com.example.demoonlinelearningplatform.exceptions.InvalidException;
 import com.example.demoonlinelearningplatform.repositories.EssayAnswerRepository;
 import com.example.demoonlinelearningplatform.repositories.MultipleChoiceAnswerRepository;
 import com.example.demoonlinelearningplatform.repositories.TestRepository;

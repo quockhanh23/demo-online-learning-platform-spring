@@ -1,10 +1,10 @@
-package com.example.demoonlinelearningplatform.services.impl;
+package com.example.demoonlinelearningplatform.services.impls;
 
-import com.example.demoonlinelearningplatform.common.CommonConstant;
+import com.example.demoonlinelearningplatform.commons.CommonConstant;
 import com.example.demoonlinelearningplatform.dtos.TestDTO;
 import com.example.demoonlinelearningplatform.dtos.TopicTestDTO;
 import com.example.demoonlinelearningplatform.entities.*;
-import com.example.demoonlinelearningplatform.exception.InvalidException;
+import com.example.demoonlinelearningplatform.exceptions.InvalidException;
 import com.example.demoonlinelearningplatform.repositories.*;
 import com.example.demoonlinelearningplatform.services.TestService;
 import com.example.demoonlinelearningplatform.services.TopicTestService;

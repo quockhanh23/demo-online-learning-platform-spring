@@ -1,8 +1,8 @@
-package com.example.demoonlinelearningplatform.services.impl;
+package com.example.demoonlinelearningplatform.services.impls;
 
 import com.example.demoonlinelearningplatform.entities.EssayQuestion;
 import com.example.demoonlinelearningplatform.entities.MultipleChoiceQuestion;
-import com.example.demoonlinelearningplatform.exception.InvalidException;
+import com.example.demoonlinelearningplatform.exceptions.InvalidException;
 import com.example.demoonlinelearningplatform.repositories.EssayQuestionRepository;
 import com.example.demoonlinelearningplatform.repositories.MultipleChoiceQuestionRepository;
 import com.example.demoonlinelearningplatform.services.QuestionService;

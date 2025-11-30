@@ -1,10 +1,10 @@
-package com.example.demoonlinelearningplatform.services.impl;
+package com.example.demoonlinelearningplatform.services.impls;
 
 import com.example.demoonlinelearningplatform.entities.Lesson;
 import com.example.demoonlinelearningplatform.entities.LessonLog;
 import com.example.demoonlinelearningplatform.entities.Test;
 import com.example.demoonlinelearningplatform.entities.User;
-import com.example.demoonlinelearningplatform.exception.InvalidException;
+import com.example.demoonlinelearningplatform.exceptions.InvalidException;
 import com.example.demoonlinelearningplatform.repositories.LessonLogRepository;
 import com.example.demoonlinelearningplatform.repositories.LessonRepository;
 import com.example.demoonlinelearningplatform.repositories.TestRepository;

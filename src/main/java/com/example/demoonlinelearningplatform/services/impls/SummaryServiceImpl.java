@@ -1,4 +1,4 @@
-package com.example.demoonlinelearningplatform.services.impl;
+package com.example.demoonlinelearningplatform.services.impls;
 
 import com.example.demoonlinelearningplatform.dtos.Summary;
 import com.example.demoonlinelearningplatform.entities.Course;

@@ -1,12 +1,12 @@
-package com.example.demoonlinelearningplatform.services.impl;
+package com.example.demoonlinelearningplatform.services.impls;
 
-import com.example.demoonlinelearningplatform.common.CommonConstant;
-import com.example.demoonlinelearningplatform.common.RoleConstant;
+import com.example.demoonlinelearningplatform.commons.CommonConstant;
+import com.example.demoonlinelearningplatform.commons.RoleConstant;
 import com.example.demoonlinelearningplatform.entities.Course;
 import com.example.demoonlinelearningplatform.entities.CourseLog;
 import com.example.demoonlinelearningplatform.entities.Role;
 import com.example.demoonlinelearningplatform.entities.User;
-import com.example.demoonlinelearningplatform.exception.InvalidException;
+import com.example.demoonlinelearningplatform.exceptions.InvalidException;
 import com.example.demoonlinelearningplatform.repositories.CourseLogRepository;
 import com.example.demoonlinelearningplatform.repositories.CourseRepository;
 import com.example.demoonlinelearningplatform.repositories.UserRepository;

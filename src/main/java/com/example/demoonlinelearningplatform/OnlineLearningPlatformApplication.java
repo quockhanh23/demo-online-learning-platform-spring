@@ -1,6 +1,6 @@
 package com.example.demoonlinelearningplatform;
 
-import com.example.demoonlinelearningplatform.common.RoleConstant;
+import com.example.demoonlinelearningplatform.commons.RoleConstant;
 import com.example.demoonlinelearningplatform.entities.Role;
 import com.example.demoonlinelearningplatform.entities.User;
 import com.example.demoonlinelearningplatform.repositories.RoleRepository;

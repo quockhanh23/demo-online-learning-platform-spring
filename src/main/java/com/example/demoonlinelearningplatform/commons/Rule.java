@@ -1,4 +1,4 @@
-package com.example.demoonlinelearningplatform.common;
+package com.example.demoonlinelearningplatform.commons;
 
 public class Rule {
 

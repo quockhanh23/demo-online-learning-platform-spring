@@ -1,6 +1,6 @@
 package com.example.demoonlinelearningplatform.controllers;
 
-import com.example.demoonlinelearningplatform.common.CommonConstant;
+import com.example.demoonlinelearningplatform.commons.CommonConstant;
 import com.example.demoonlinelearningplatform.entities.Notification;
 import com.example.demoonlinelearningplatform.repositories.NotificationRepository;
 import lombok.RequiredArgsConstructor;

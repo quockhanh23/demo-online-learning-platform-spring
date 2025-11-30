@@ -1,9 +1,9 @@
 package com.example.demoonlinelearningplatform.controllers;
 
-import com.example.demoonlinelearningplatform.common.CommonConstant;
+import com.example.demoonlinelearningplatform.commons.CommonConstant;
 import com.example.demoonlinelearningplatform.entities.Course;
 import com.example.demoonlinelearningplatform.entities.Review;
-import com.example.demoonlinelearningplatform.exception.InvalidException;
+import com.example.demoonlinelearningplatform.exceptions.InvalidException;
 import com.example.demoonlinelearningplatform.repositories.CourseRepository;
 import com.example.demoonlinelearningplatform.repositories.ReviewRepository;
 import com.example.demoonlinelearningplatform.services.CourseService;
