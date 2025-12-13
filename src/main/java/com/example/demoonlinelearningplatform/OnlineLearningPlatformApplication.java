@@ -1,9 +1,11 @@
 package com.example.demoonlinelearningplatform;
 
-import com.example.demoonlinelearningplatform.entity.Role;
-import com.example.demoonlinelearningplatform.entity.User;
-import com.example.demoonlinelearningplatform.repository.RoleRepository;
-import com.example.demoonlinelearningplatform.repository.UserRepository;
+import com.example.demoonlinelearningplatform.commons.CommonConstant;
+import com.example.demoonlinelearningplatform.commons.RoleConstant;
+import com.example.demoonlinelearningplatform.entities.Role;
+import com.example.demoonlinelearningplatform.entities.User;
+import com.example.demoonlinelearningplatform.repositories.RoleRepository;
+import com.example.demoonlinelearningplatform.repositories.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -30,19 +32,19 @@ public class OnlineLearningPlatformApplication {
                                  RoleRepository roleRepository) {
         return args ->
         {
-            if (roleRepository.findByRoleName("ADMIN") == null) {
+            if (roleRepository.findByRoleName(RoleConstant.ROLE_ADMIN) == null) {
                 Role role = new Role();
-                role.setRoleName("ADMIN");
+                role.setRoleName(RoleConstant.ROLE_ADMIN);
                 roleRepository.save(role);
             }
-            if (roleRepository.findByRoleName("STUDENT") == null) {
+            if (roleRepository.findByRoleName(RoleConstant.ROLE_STUDENT) == null) {
                 Role role = new Role();
-                role.setRoleName("STUDENT");
+                role.setRoleName(RoleConstant.ROLE_STUDENT);
                 roleRepository.save(role);
             }
-            if (roleRepository.findByRoleName("TEACHER") == null) {
+            if (roleRepository.findByRoleName(RoleConstant.ROLE_TEACHER) == null) {
                 Role role = new Role();
-                role.setRoleName("TEACHER");
+                role.setRoleName(RoleConstant.ROLE_TEACHER);
                 roleRepository.save(role);
             }
 
@@ -50,7 +52,7 @@ public class OnlineLearningPlatformApplication {
             if (Objects.isNull(admin)) {
                 User user = new User();
                 Set<Role> roles = new HashSet<>();
-                Role role = roleRepository.findByRoleName("ADMIN");
+                Role role = roleRepository.findByRoleName(RoleConstant.ROLE_ADMIN);
                 roles.add(role);
                 user.setRoles(roles);
                 user.setUsername("admin");
@@ -59,7 +61,7 @@ public class OnlineLearningPlatformApplication {
                 user.setFullName("admin");
                 user.setCreatedDate(new Date());
                 user.setUpdatedDate(new Date());
-                user.setStatus("ACTIVE");
+                user.setStatus(CommonConstant.ACTIVE);
                 userRepository.save(user);
             }
         };
