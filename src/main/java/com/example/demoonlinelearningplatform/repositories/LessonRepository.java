@@ -23,4 +23,6 @@ public interface LessonRepository extends JpaRepository<Lesson, Long> {
 
     @Query(value = "select * from lesson WHERE id_course = :idCourse and lesson_name like CONCAT('%', :searchText, '%') ", nativeQuery = true)
     List<Lesson> findByIdCourse(Long idCourse, @Param("searchText") String searchText);
+
+    List<Lesson> findAllByIdCourseIn(List<Long> idCourses);
 }

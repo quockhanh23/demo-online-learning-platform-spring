@@ -9,6 +9,10 @@ import lombok.Setter;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
+/**
+ * Bảng khóa học
+ */
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -36,5 +40,6 @@ public class Course {
     @Column(length = 20)
     private String status;
     private String rate;
+    // id bộ môn
     private Long idDepartment;
 }

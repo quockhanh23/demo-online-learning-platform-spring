@@ -27,6 +27,7 @@ public class TestServiceImpl implements TestService {
     private final LessonRepository lessonRepository;
     private final MultipleChoiceAnswerRepository multipleChoiceAnswerRepository;
     private final EssayAnswerRepository essayAnswerRepository;
+    private final LessonCompletionRepository lessonCompletionRepository;
     private final TopicTestService topicTestService;
 
     @Override
@@ -44,7 +45,20 @@ public class TestServiceImpl implements TestService {
         request.setStatus(CommonConstant.ACTIVE);
         request.setIdCourse(lessonOptional.get().getIdCourse());
         request.setType(topicTestOptional.get().getType());
+        saveLessonCompletion(lessonOptional.get(), request.getIdStudent());
         return testRepository.saveAndFlush(request);
+    }
+
+    private void saveLessonCompletion(Lesson lesson, Long idUser) {
+        Optional<LessonCompletion> lessonCompletion = lessonCompletionRepository.findById(lesson.getId());
+        if (lessonCompletion.isEmpty()) {
+            LessonCompletion completion = new LessonCompletion();
+            completion.setIdLesson(lesson.getId());
+            completion.setIdCourse(lesson.getIdCourse());
+            completion.setStatus(CommonConstant.COMPLETE);
+            completion.setIdUser(idUser);
+            lessonCompletionRepository.save(completion);
+        }
     }
 
     @Override

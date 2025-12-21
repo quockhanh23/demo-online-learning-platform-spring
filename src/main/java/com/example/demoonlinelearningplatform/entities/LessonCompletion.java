@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Date;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -18,7 +20,10 @@ public class LessonCompletion {
     private Long id;
     private Long idLesson;
     private Long idCourse;
+    private Long idUser;
     private String timeLearned;
     @Column(length = 20)
     private String status;
+    private Date createdDate = new Date();
+    private Date updatedDate;
 }

@@ -36,4 +36,14 @@ public class SummaryController {
         Pageable pageable = PageRequest.of(page, size);
         return new ResponseEntity<>(summaryService.coursesSummary(idUserLogin), HttpStatus.OK);
     }
+
+    @GetMapping("/checkCompleteLesson")
+    public ResponseEntity<Object> checkCompleteLesson(@RequestParam Long idUserLogin, @RequestParam Long idLesson) {
+        return new ResponseEntity<>(summaryService.checkCompleteLesson(idUserLogin, idLesson), HttpStatus.OK);
+    }
+
+    @GetMapping("/checkCompleteCourse")
+    public ResponseEntity<Object> checkCompleteCourse(@RequestParam Long idUserLogin) {
+        return new ResponseEntity<>(summaryService.checkCompleteCourse(idUserLogin), HttpStatus.OK);
+    }
 }
