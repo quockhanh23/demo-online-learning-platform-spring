@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 import java.util.Date;
 
 @Getter
@@ -27,6 +27,7 @@ public class Test {
     @NotNull
     private Long idLesson;
     private Long idCourse;
+    @NotNull
     private Long idTopicTest;
     private String studentName;
     private int score;

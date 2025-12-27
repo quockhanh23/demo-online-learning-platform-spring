@@ -1,14 +1,17 @@
 package com.example.demoonlinelearningplatform.controllers;
 
+import com.example.demoonlinelearningplatform.commons.Common;
 import com.example.demoonlinelearningplatform.dtos.UserDTO;
 import com.example.demoonlinelearningplatform.entities.User;
 import com.example.demoonlinelearningplatform.services.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -102,7 +105,10 @@ public class AdminController {
      * @return thông tin người dùng
      */
     @PostMapping("/createUser")
-    public ResponseEntity<Object> createUser(@RequestBody User user, @RequestParam String role) {
+    public ResponseEntity<Object> createUser(@Valid @RequestBody User user,
+                                             @RequestParam String role,
+                                             BindingResult bindingResult) {
+        Common.commonHandlerError(bindingResult);
         UserDTO userDTO = userService.createUser(user, role);
         return new ResponseEntity<>(userDTO, HttpStatus.CREATED);
     }

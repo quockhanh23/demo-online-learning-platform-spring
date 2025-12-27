@@ -1,14 +1,17 @@
 package com.example.demoonlinelearningplatform.controllers;
 
+import com.example.demoonlinelearningplatform.commons.Common;
 import com.example.demoonlinelearningplatform.entities.EssayQuestion;
 import com.example.demoonlinelearningplatform.entities.MultipleChoiceQuestion;
 import com.example.demoonlinelearningplatform.entities.TopicTest;
 import com.example.demoonlinelearningplatform.services.QuestionService;
 import com.example.demoonlinelearningplatform.services.TopicTestService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.CollectionUtils;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,7 +35,8 @@ public class TopicTestController {
      * @return thông tin đề bài kiểm tra
      */
     @PostMapping("/createTopicTest")
-    public ResponseEntity<Object> createTopicTest(@RequestBody TopicTest topicTest) {
+    public ResponseEntity<Object> createTopicTest(@Valid @RequestBody TopicTest topicTest, BindingResult bindingResult) {
+        Common.commonHandlerError(bindingResult);
         return new ResponseEntity<>(topicTestService.createTopicTest(topicTest), HttpStatus.CREATED);
     }
 

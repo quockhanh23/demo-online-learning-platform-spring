@@ -1,13 +1,16 @@
 package com.example.demoonlinelearningplatform.controllers;
 
+import com.example.demoonlinelearningplatform.commons.Common;
 import com.example.demoonlinelearningplatform.entities.Lesson;
 import com.example.demoonlinelearningplatform.services.LessonService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -61,7 +64,10 @@ public class LessonController {
      * @return thông tin bài học
      */
     @PostMapping("/createLesson")
-    public ResponseEntity<Object> createLesson(@RequestBody Lesson lesson, @RequestParam Long idUser) {
+    public ResponseEntity<Object> createLesson(@Valid @RequestBody Lesson lesson,
+                                               @RequestParam Long idUser,
+                                               BindingResult bindingResult) {
+        Common.commonHandlerError(bindingResult);
         return new ResponseEntity<>(lessonService.createLesson(lesson, idUser), HttpStatus.CREATED);
     }
 

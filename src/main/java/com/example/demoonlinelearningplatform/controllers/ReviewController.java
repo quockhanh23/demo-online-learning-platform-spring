@@ -1,9 +1,11 @@
 package com.example.demoonlinelearningplatform.controllers;
 
+import com.example.demoonlinelearningplatform.commons.Common;
 import com.example.demoonlinelearningplatform.commons.CommonConstant;
 import com.example.demoonlinelearningplatform.entities.Course;
 import com.example.demoonlinelearningplatform.entities.Review;
 import com.example.demoonlinelearningplatform.exceptions.InvalidException;
+import com.example.demoonlinelearningplatform.repositories.CourseRegisterRepository;
 import com.example.demoonlinelearningplatform.repositories.CourseRepository;
 import com.example.demoonlinelearningplatform.repositories.ReviewRepository;
 import com.example.demoonlinelearningplatform.services.CourseService;
@@ -14,11 +16,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.CollectionUtils;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import jakarta.validation.Valid;
+
+import java.util.*;
 
 @RestController
 @CrossOrigin("*")
@@ -29,6 +32,7 @@ public class ReviewController {
     private final ReviewRepository reviewRepository;
     private final CourseService courseService;
     private final CourseRepository courseRepository;
+    private final CourseRegisterRepository courseRegisterRepository;
 
     /**
      * API này dùng để tạo mới đánh giá
@@ -37,9 +41,16 @@ public class ReviewController {
      * @return void
      */
     @PostMapping("/createReview")
-    public ResponseEntity<Object> createReview(@RequestBody Review review) {
+    public ResponseEntity<Object> createReview(@Valid @RequestBody Review review, BindingResult bindingResult) {
+        Common.commonHandlerError(bindingResult);
         List<Review> reviewList = reviewRepository.findAllByIdCourse(review.getIdCourse());
         Course course = courseService.getDetailCourse(review.getIdCourse());
+        if (course.getStatus().equals(CommonConstant.INACTIVE)) {
+            throw new InvalidException("Khóa học đã ngừng hoạt động không thể đánh giá");
+        }
+        if (courseRegisterRepository.findByIdCourseAndIdUserRegister(review.getIdCourse(), review.getIdUserAction()) == null) {
+            throw new InvalidException("Bạn chưa đăng kí khóa học này");
+        }
         if (CollectionUtils.isEmpty(reviewList)) {
             course.setRate(null);
             courseRepository.save(course);

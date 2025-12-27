@@ -1,10 +1,13 @@
 package com.example.demoonlinelearningplatform.controllers;
 
+import com.example.demoonlinelearningplatform.commons.Common;
 import com.example.demoonlinelearningplatform.entities.Tuition;
 import com.example.demoonlinelearningplatform.services.TuitionService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,7 +27,10 @@ public class TuitionController {
      * @return void
      */
     @PostMapping("/createTuition")
-    public ResponseEntity<Object> createTuition(@RequestParam List<Long> idUsers, @RequestBody Tuition tuition) {
+    public ResponseEntity<Object> createTuition(@RequestParam List<Long> idUsers,
+                                                @Valid @RequestBody Tuition tuition,
+                                                BindingResult bindingResult) {
+        Common.commonHandlerError(bindingResult);
         tuitionService.createPayment(idUsers, tuition);
         return new ResponseEntity<>(HttpStatus.OK);
     }

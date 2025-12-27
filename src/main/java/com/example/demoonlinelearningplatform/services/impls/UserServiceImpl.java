@@ -118,6 +118,7 @@ public class UserServiceImpl implements UserService {
             User user = page.getContent().get(i);
             UserDTO userDTO = UserDTO.builder().build();
             BeanUtils.copyProperties(user, userDTO);
+            userDTO.setOnline(true);
             userDTOS.add(userDTO);
         }
         return userDTOS;

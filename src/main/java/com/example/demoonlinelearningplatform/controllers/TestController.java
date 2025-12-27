@@ -1,5 +1,6 @@
 package com.example.demoonlinelearningplatform.controllers;
 
+import com.example.demoonlinelearningplatform.commons.Common;
 import com.example.demoonlinelearningplatform.dtos.TestDTO;
 import com.example.demoonlinelearningplatform.dtos.TopicTestDTO;
 import com.example.demoonlinelearningplatform.entities.EssayAnswer;
@@ -12,10 +13,12 @@ import com.example.demoonlinelearningplatform.repositories.MultipleChoiceAnswerR
 import com.example.demoonlinelearningplatform.repositories.TestRepository;
 import com.example.demoonlinelearningplatform.services.TestService;
 import com.example.demoonlinelearningplatform.services.TopicTestService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.CollectionUtils;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -40,7 +43,8 @@ public class TestController {
      * @return thông tin bài kiểm tra vừa được tạo
      */
     @PostMapping("/createTest")
-    public ResponseEntity<Object> createTest(@RequestBody Test test) {
+    public ResponseEntity<Object> createTest(@Valid @RequestBody Test test, BindingResult bindingResult) {
+        Common.commonHandlerError(bindingResult);
         return new ResponseEntity<>(testService.createTest(test), HttpStatus.CREATED);
     }
 
@@ -94,11 +98,14 @@ public class TestController {
 
     /**
      * Lưu lại các câu trả lời trắc nghiệm
+     *
      * @param answers: danh sách các câu trả lời trắc nghiệm
      * @return void
      */
     @PostMapping("/createMultipleChoiceAnswer")
-    public ResponseEntity<Object> createMultipleChoiceAnswer(@RequestBody List<MultipleChoiceAnswer> answers) {
+    public ResponseEntity<Object> createMultipleChoiceAnswer(@Valid @RequestBody List<MultipleChoiceAnswer> answers,
+                                                             BindingResult bindingResult) {
+        Common.commonHandlerError(bindingResult);
         if (CollectionUtils.isEmpty(answers)) throw new InvalidException("Danh sách trống");
         multipleChoiceAnswerRepository.saveAll(answers);
         TopicTestDTO topicTestDTO = topicTestService.getDetailTopicTestByLesson(answers.get(0).getIdLesson());
@@ -123,11 +130,14 @@ public class TestController {
 
     /**
      * Lưu lại các câu trả lời tự luận
+     *
      * @param answers: danh sách các câu trả lời tự luận
      * @return void
      */
     @PostMapping("/createEssayAnswer")
-    public ResponseEntity<Object> createEssayAnswer(@RequestBody List<EssayAnswer> answers) {
+    public ResponseEntity<Object> createEssayAnswer(@Valid @RequestBody List<EssayAnswer> answers,
+                                                    BindingResult bindingResult) {
+        Common.commonHandlerError(bindingResult);
         if (!CollectionUtils.isEmpty(answers)) {
             essayAnswerRepository.saveAll(answers);
         }

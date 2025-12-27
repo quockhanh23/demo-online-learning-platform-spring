@@ -1,8 +1,10 @@
 package com.example.demoonlinelearningplatform.controllers;
 
+import com.example.demoonlinelearningplatform.commons.Common;
 import com.example.demoonlinelearningplatform.commons.CommonConstant;
 import com.example.demoonlinelearningplatform.entities.Notification;
 import com.example.demoonlinelearningplatform.repositories.NotificationRepository;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -10,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.CollectionUtils;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -39,7 +42,9 @@ public class NotificationController {
      * @return void
      */
     @PostMapping("/createNotification")
-    public ResponseEntity<Object> createNotification(@RequestBody Notification notification) {
+    public ResponseEntity<Object> createNotification(@Valid @RequestBody Notification notification,
+                                                     BindingResult bindingResult) {
+        Common.commonHandlerError(bindingResult);
         notification.setCreatedDate(new Date());
         notification.setStatus(CommonConstant.ACTIVE);
         notificationRepository.save(notification);

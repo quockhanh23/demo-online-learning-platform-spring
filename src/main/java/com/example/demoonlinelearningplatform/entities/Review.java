@@ -1,6 +1,7 @@
 package com.example.demoonlinelearningplatform.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,7 +28,9 @@ public class Review {
     private String content;
     private Date createdDate;
     private Date updatedDate;
+    @NotNull
     private Long idCourse;
     private Long idTeacher;
+    @NotNull
     private Long idUserAction;
 }

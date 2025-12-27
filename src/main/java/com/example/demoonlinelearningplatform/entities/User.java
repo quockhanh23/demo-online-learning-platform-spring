@@ -1,6 +1,7 @@
 package com.example.demoonlinelearningplatform.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,10 +20,13 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(length = 60)
+    @NotBlank
     private String username;
     @Column(length = 40)
+    @NotBlank
     private String password;
     @Column(length = 40)
+    @NotBlank
     private String confirmPassword;
     @Column(length = 200)
     private String fullName;

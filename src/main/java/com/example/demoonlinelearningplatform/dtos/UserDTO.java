@@ -22,4 +22,5 @@ public class UserDTO {
     private String education;
     private String avatar;
     private Set<Role> roles;
+    private boolean online;
 }
