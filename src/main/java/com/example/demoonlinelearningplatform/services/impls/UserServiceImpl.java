@@ -4,9 +4,11 @@ import com.example.demoonlinelearningplatform.commons.CommonConstant;
 import com.example.demoonlinelearningplatform.commons.RoleConstant;
 import com.example.demoonlinelearningplatform.dtos.ChangePassword;
 import com.example.demoonlinelearningplatform.dtos.UserDTO;
+import com.example.demoonlinelearningplatform.entities.Notification;
 import com.example.demoonlinelearningplatform.entities.Role;
 import com.example.demoonlinelearningplatform.entities.User;
 import com.example.demoonlinelearningplatform.exceptions.InvalidException;
+import com.example.demoonlinelearningplatform.repositories.NotificationRepository;
 import com.example.demoonlinelearningplatform.repositories.RoleRepository;
 import com.example.demoonlinelearningplatform.repositories.UserRepository;
 import com.example.demoonlinelearningplatform.services.UserService;
@@ -29,12 +31,17 @@ public class UserServiceImpl implements UserService {
 
     private final RoleRepository roleRepository;
 
+    private final NotificationRepository notificationRepository;
+
     @Override
     public UserDTO login(User userRequest) {
         User user = userRepository.findUserByUsername(userRequest.getUsername());
         if (Objects.isNull(user)) throw new InvalidException("Sai tên đăng nhập");
         if (!user.getPassword().equals(userRequest.getPassword())) {
             throw new InvalidException("Sai mật khẩu");
+        }
+        if (CommonConstant.BANED.equals(user.getStatus())) {
+            throw new InvalidException("Bạn đã bị cấm vui lòng liên hệ với admin để được hỗ trợ");
         }
         UserDTO userDTO = UserDTO.builder().build();
         BeanUtils.copyProperties(user, userDTO);
@@ -141,6 +148,20 @@ public class UserServiceImpl implements UserService {
         }
         userOptional.get().setStatus(action);
         userRepository.save(userOptional.get());
+
+        Notification notification1 = new Notification();
+        notification1.setCreatedDate(new Date());
+        notification1.setContent("Bạn vừa " + action + " với người dùng " + userOptional.get().getUsername());
+        notification1.setIdUserReceiver(idAdmin);
+
+        notification1.setStatus(CommonConstant.ACTIVE);
+        Notification notification2 = new Notification();
+        notification2.setCreatedDate(new Date());
+        notification2.setContent("Bạn vừa bị admin " + action);
+        notification2.setIdUserReceiver(userOptional.get().getId());
+        notification2.setStatus(CommonConstant.ACTIVE);
+
+        notificationRepository.saveAll(List.of(notification1, notification2));
     }
 
     @Override

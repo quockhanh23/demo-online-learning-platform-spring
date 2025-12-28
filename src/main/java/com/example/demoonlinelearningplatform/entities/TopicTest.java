@@ -26,7 +26,6 @@ public class TopicTest {
     private String type;
     @Column(length = 20)
     private String status;
-    @NotNull
     private Long idCourse;
     @NotNull
     private Long idLesson;

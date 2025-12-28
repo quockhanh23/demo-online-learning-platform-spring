@@ -11,7 +11,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -61,7 +63,33 @@ public class QuestionServiceImpl implements QuestionService {
             throw new InvalidException("Đáp án D của câu hỏi:" + question.getQuestionNumber() + " Không được để trống");
         if (StringUtils.isEmpty(question.getCorrectAnswer()))
             throw new InvalidException("Đáp án đúng của câu hỏi: " + question.getQuestionNumber() + " Không được để trống");
+
+        validateDuplicateAnswers(question);
     }
+
+
+    private void validateDuplicateAnswers(MultipleChoiceQuestion question) {
+        Set<String> answers = new HashSet<>();
+        answers.add(normalize(question.getAnswer1()));
+        answers.add(normalize(question.getAnswer2()));
+        answers.add(normalize(question.getAnswer3()));
+        answers.add(normalize(question.getAnswer4()));
+        if (answers.size() < 4) {
+            throw new InvalidException(
+                    "Các đáp án của câu hỏi số: " + question.getQuestionNumber() + " không được trùng nhau"
+            );
+        }
+        String correctAnswer = question.getCorrectAnswer();
+        boolean check = answers.stream().anyMatch(item -> item.equals(correctAnswer));
+        if (!check) {
+            throw new InvalidException("Đáp án đúng phải trùng khớp với 1 trong 4 đáp án trên");
+        }
+    }
+
+    private String normalize(String value) {
+        return value.trim().toLowerCase();
+    }
+
 
     private void validateObject(EssayQuestion essayQuestion) {
         if (StringUtils.isEmpty(essayQuestion.getContent()))
