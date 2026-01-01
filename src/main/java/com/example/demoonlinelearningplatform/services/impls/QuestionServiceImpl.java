@@ -25,8 +25,8 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public void createMultipleChoiceQuestion(List<MultipleChoiceQuestion> questions) {
         if (CollectionUtils.isEmpty(questions)) return;
-        for (int i = 0; i < questions.size(); i++) {
-            validateObject(questions.get(i));
+        for (MultipleChoiceQuestion question : questions) {
+            validateObject(question);
         }
         questionRepository.saveAll(questions);
     }
@@ -44,8 +44,8 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public void createEssayQuestion(List<EssayQuestion> questions) {
         if (CollectionUtils.isEmpty(questions)) return;
-        for (int i = 0; i < questions.size(); i++) {
-            validateObject(questions.get(i));
+        for (EssayQuestion question : questions) {
+            validateObject(question);
         }
         essayQuestionRepository.saveAll(questions);
     }
@@ -89,7 +89,6 @@ public class QuestionServiceImpl implements QuestionService {
     private String normalize(String value) {
         return value.trim().toLowerCase();
     }
-
 
     private void validateObject(EssayQuestion essayQuestion) {
         if (StringUtils.isEmpty(essayQuestion.getContent()))

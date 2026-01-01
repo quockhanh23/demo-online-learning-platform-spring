@@ -51,8 +51,8 @@ public class TopicTestServiceImpl implements TopicTestService {
         List<TopicTest> topicTestList = topicTestRepository.getAllByIdCourse(idCourse);
         if (CollectionUtils.isEmpty(topicTestList)) return List.of();
         List<TopicTestDTO> topicTestDTOS = new ArrayList<>();
-        for (int i = 0; i < topicTestList.size(); i++) {
-            TopicTestDTO topicTestDTO = getData(topicTestList.get(i));
+        for (TopicTest topicTest : topicTestList) {
+            TopicTestDTO topicTestDTO = getData(topicTest);
             topicTestDTOS.add(topicTestDTO);
         }
         return topicTestDTOS;

@@ -7,6 +7,7 @@ import com.example.demoonlinelearningplatform.services.ReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -22,6 +23,7 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     void validateReview(Review request) {
+        if (Objects.isNull(request)) return;
         if (request.getContent().length() > 500) throw new InvalidException("Nội dung đánh giá không quá 500 kí tự");
     }
 
