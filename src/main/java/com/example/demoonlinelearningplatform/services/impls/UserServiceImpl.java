@@ -137,7 +137,7 @@ public class UserServiceImpl implements UserService {
         if (admin.isEmpty()) throw new InvalidException("Không có người dùng này");
         Set<Role> roles = admin.get().getRoles();
         List<String> strings = roles.stream().map(Role::getRoleName).filter(StringUtils::isNotEmpty).toList();
-        if (!strings.contains("ADMIN")) {
+        if (!strings.contains(RoleConstant.ROLE_ADMIN)) {
             throw new InvalidException("Bạn không phải là admin");
         }
         Optional<User> userOptional = userRepository.findById(idUser);
