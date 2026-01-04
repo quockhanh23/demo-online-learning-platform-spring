@@ -13,4 +13,6 @@ public interface CourseService {
     Course updateCourse(Course request, Long idUser);
 
     Page<Course> getAllCoursePage(Pageable pageable, String searchText);
+
+    Page<Course> getAllCourseByDepartment(Pageable pageable, String searchText, Long idDepartment);
 }

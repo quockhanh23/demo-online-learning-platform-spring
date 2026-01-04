@@ -97,6 +97,17 @@ public class CourseServiceImpl implements CourseService {
         return coursePage;
     }
 
+    @Override
+    public Page<Course> getAllCourseByDepartment(Pageable pageable, String searchText, Long idDepartment) {
+        Page<Course> coursePage;
+        if (StringUtils.isEmpty(searchText)) {
+            coursePage = courseRepository.getAllCourseByDepartment(pageable, idDepartment);
+        } else {
+            coursePage = courseRepository.getAllCourseByDepartment(pageable, searchText, idDepartment);
+        }
+        return coursePage;
+    }
+
     private void createCourseLog(Course request, Long idUser) {
         CourseLog courseLog = CourseLog.builder()
                 .courseName(request.getCourseName())

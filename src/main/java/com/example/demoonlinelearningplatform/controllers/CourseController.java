@@ -41,6 +41,16 @@ public class CourseController {
         return new ResponseEntity<>(coursePage, HttpStatus.OK);
     }
 
+    @GetMapping("/getAllCourseByDepartment")
+    public ResponseEntity<Object> getAllCourseByDepartment(@RequestParam(defaultValue = "0", required = false) int page,
+                                                           @RequestParam(defaultValue = "8", required = false) int size,
+                                                           @RequestParam(required = false) String searchText,
+                                                           @RequestParam Long idDepartment) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Course> coursePage = courseService.getAllCourseByDepartment(pageable, searchText, idDepartment);
+        return new ResponseEntity<>(coursePage, HttpStatus.OK);
+    }
+
     /**
      * API này lấy ra danh sách khóa học mà người dùng đã đăng kí
      *
